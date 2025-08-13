@@ -1,0 +1,452 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => {
+    return !data?.draft;
+  });
+
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: post,
+  }));
+}
+
+const post = Astro.props;
+
+// For custom loader content, we need to render markdown manually with math support
+import { marked } from 'marked';
+import markedKatex from 'marked-katex-extension';
+
+// Function to generate heading IDs from text
+function generateHeadingId(text) {
+  // Convert to string if it's not already
+  const textStr = typeof text === 'string' ? text : String(text);
+  return textStr
+    .replace(/\x1b\[[0-9;]*[mK]/g, '') // Remove ANSI color codes
+    .replace(/<[^>]*>/g, '') // Remove HTML tags
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '') // Remove special characters
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/-+/g, '-') // Replace multiple hyphens with single
+    .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
+}
+
+// Configure marked with KaTeX extension for math rendering
+marked.use(markedKatex({
+  throwOnError: false,
+  displayMode: false,
+  output: 'html',
+  // Enable both inline and display math
+  delimiters: [
+    {left: '$$', right: '$$', display: true},
+    {left: '$', right: '$', display: false}
+  ],
+  // Additional KaTeX options for better rendering
+  strict: false,
+  trust: true,
+  macros: {
+    "\\ell": "\\mathit{l}"
+  }
+}));
+
+// Configure marked to generate IDs for headings
+marked.use({
+  renderer: {
+    heading(text, level, raw) {
+      // Extract text content from marked token
+      const textContent = typeof text === 'string' ? text : text.text || text.raw || String(text);
+      // Clean ANSI codes from the display text as well
+      const cleanTextContent = textContent.replace(/\x1b\[[0-9;]*[mK]/g, '');
+      const headingLevel = level || 2; // Default to h2 if level is undefined
+      const id = generateHeadingId(cleanTextContent);
+      return `<h${headingLevel} id="${id}">${cleanTextContent}</h${headingLevel}>`;
+    }
+  }
+});
+
+// Remove the first H1 heading from markdown content to avoid duplicate titles
+let markdownContent = post.data?.body || post.body || '';
+
+// Clean up ANSI color codes that might interfere with math rendering
+markdownContent = markdownContent.replace(/\x1b\[[0-9;]*[mK]/g, '');
+
+// Remove only the first H1 heading to avoid duplicate titles, but keep all other headings
+markdownContent = markdownContent.replace(/^#\s+.*$/m, ''); // Remove first H1
+markdownContent = markdownContent.replace(/^\s*\n/, ''); // Remove leading whitespace
+
+// Transform relative image paths to GitHub raw URLs
+const repository = post.data?.data?.repository || post.data?.repository;
+if (repository) {
+  // Transform relative image paths like ./image.png or image.png to GitHub raw URLs
+  markdownContent = markdownContent.replace(
+    /!\[([^\]]*)\]\(\.\/([^)]+)\)/g,
+    `![$1](https://raw.githubusercontent.com/${repository}/main/$2)`
+  );
+  markdownContent = markdownContent.replace(
+    /!\[([^\]]*)\]\((?!https?:\/\/)([^)\/][^)]*)\)/g,
+    `![$1](https://raw.githubusercontent.com/${repository}/main/$2)`
+  );
+}
+
+const htmlContent = marked(markdownContent);
+
+// Extract headings for table of contents
+const headingRegex = /<h([1-6])[^>]*id="([^"]*)"[^>]*>([^<]*)<\/h[1-6]>/g;
+const headings = [];
+let match;
+while ((match = headingRegex.exec(htmlContent)) !== null) {
+  headings.push({
+    level: parseInt(match[1]),
+    id: match[2],
+    text: match[3]
+  });
+}
+
+function formatDate(date: Date | string | undefined) {
+  if (!date) return 'Unknown date';
+  const dateObj = date instanceof Date ? date : new Date(date);
+  return dateObj.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+}
+---
+
+<Layout title={`${post.data?.data?.title || post.data?.title || post.id} - RANDOBLOG`} description={post.data?.data?.description || post.data?.description}>
+  <article class="max-w-4xl mx-auto px-6 py-24">
+    <!-- Back to home link -->
+    <div class="mb-12">
+      <a href="/randoblog/" class="text-accent-cyan hover:text-accent-purple transition-colors duration-200 font-medium">
+        ← Back to posts
+      </a>
+    </div>
+
+    <!-- Article header -->
+    <header class="mb-16">
+      <h1 class="text-4xl md:text-5xl font-display font-bold text-text-primary mb-8 leading-tight">
+        {post.data?.data?.title || post.data?.title || post.id}
+      </h1>
+
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+        <div class="text-text-muted mb-2 md:mb-0">
+          {formatDate(post.data?.data?.pubDate || post.data?.pubDate)}
+        </div>
+        {(post.data?.data?.updatedDate || post.data?.updatedDate) && (post.data?.data?.updatedDate || post.data?.updatedDate) > (post.data?.data?.pubDate || post.data?.pubDate) && (
+          <div class="text-text-muted text-sm">
+            Updated: {formatDate(post.data?.data?.updatedDate || post.data?.updatedDate)}
+          </div>
+        )}
+      </div>
+
+      <div class="flex flex-wrap gap-2 mb-8">
+        {(post.data?.data?.tags || post.data?.tags) && (post.data?.data?.tags || post.data?.tags).length > 0 && (post.data?.data?.tags || post.data?.tags).map((tag) => (
+          <span class="tag-secondary">
+            {tag}
+          </span>
+        ))}
+        {(post.data?.data?.repository || post.data?.repository) && (
+          <span class="tag-primary">
+            📁 {post.data?.data?.repository || post.data?.repository}
+          </span>
+        )}
+      </div>
+
+      <!-- Elegant gradient separator -->
+      <div class="w-full h-px bg-gradient-to-r from-transparent via-accent-primary/30 to-transparent"></div>
+    </header>
+
+    <!-- Table of Contents (if headings exist) -->
+    {headings.length > 0 && (
+      <div class="mb-12 p-6 bg-bg-secondary rounded-lg border border-accent-primary/20">
+        <h2 class="text-xl font-semibold text-text-primary mb-4 flex items-center">
+          <svg class="w-5 h-5 mr-2 text-accent-purple" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 16a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"></path>
+          </svg>
+          Table of Contents
+        </h2>
+        <nav class="space-y-2">
+          {headings.map(heading => (
+            <a
+              href={`#${heading.id}`}
+              class={`block text-text-secondary hover:text-accent-purple transition-colors duration-200 ${
+                heading.level === 2 ? 'font-medium' :
+                heading.level === 3 ? 'ml-4 text-sm' :
+                'ml-8 text-sm opacity-75'
+              }`}
+            >
+              {heading.text}
+            </a>
+          ))}
+        </nav>
+      </div>
+    )}
+
+    <!-- Article content -->
+    <div class="prose-modern max-w-none" set:html={htmlContent}>
+    </div>
+
+    <!-- Article footer -->
+    <footer class="mt-24 pt-12 relative">
+      <!-- Elegant gradient separator -->
+      <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-primary/30 to-transparent"></div>
+
+      {(post.data?.data?.repositoryUrl || post.data?.repositoryUrl) && (
+        <div class="text-center mb-8">
+          <div class="card inline-block">
+            <div class="text-text-muted text-sm mb-2">
+              This content is sourced from:
+            </div>
+            <a href={post.data?.data?.repositoryUrl || post.data?.repositoryUrl} target="_blank" rel="noopener noreferrer" class="text-accent-purple hover:text-accent-cyan transition-colors duration-200 font-medium">
+              {post.data?.data?.repository || post.data?.repository} on GitHub ↗
+            </a>
+          </div>
+        </div>
+      )}
+
+      <div class="text-center">
+        <a href="/randoblog/" class="btn-primary">
+          ← Back to posts
+        </a>
+      </div>
+    </footer>
+  </article>
+</Layout>
+
+<style>
+  /* Custom prose styles for modern theme */
+  .prose-modern {
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .prose-modern h1,
+  .prose-modern h2,
+  .prose-modern h3,
+  .prose-modern h4,
+  .prose-modern h5,
+  .prose-modern h6 {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .prose-modern h1 {
+    font-size: 2.25rem;
+  }
+
+  .prose-modern h2 {
+    font-size: 1.875rem;
+  }
+
+  .prose-modern h3 {
+    font-size: 1.5rem;
+  }
+
+  .prose-modern p {
+    margin-bottom: 1.5rem;
+  }
+
+  .prose-modern a {
+    color: var(--accent-cyan);
+    transition: color 0.2s ease;
+  }
+
+  .prose-modern a:hover {
+    color: var(--accent-purple);
+  }
+
+  .prose-modern strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .prose-modern em {
+    color: var(--accent-purple);
+    font-style: italic;
+  }
+
+  .prose-modern code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg-tertiary);
+    color: var(--accent-cyan);
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.875em;
+  }
+
+  .prose-modern pre {
+    background: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: 12px;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .prose-modern pre code {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  .prose-modern blockquote {
+    border-left: 4px solid var(--accent-purple);
+    padding-left: 1.5rem;
+    background: var(--bg-tertiary);
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 8px;
+  }
+
+  .prose-modern ul,
+  .prose-modern ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .prose-modern li {
+    margin-bottom: 0.5rem;
+  }
+
+  .prose-modern table {
+    width: 100%;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 1.5rem 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .prose-modern th {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    font-weight: 600;
+    padding: 0.75rem;
+    text-align: left;
+  }
+
+  .prose-modern td {
+    padding: 0.75rem;
+    border-top: 1px solid var(--bg-tertiary);
+  }
+
+  .prose-modern hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--accent-primary), transparent);
+    margin: 2rem 0;
+    opacity: 0.3;
+  }
+
+  /* Math expressions styling */
+  .prose-modern .katex-display {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Smooth scrolling for the entire page */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Add scroll margin to headings to account for any fixed headers */
+  .prose-modern h1,
+  .prose-modern h2,
+  .prose-modern h3,
+  .prose-modern h4,
+  .prose-modern h5,
+  .prose-modern h6 {
+    scroll-margin-top: 2rem;
+  }
+
+  /* Style for table of contents links */
+  .prose-modern a[href^="#"] {
+    color: var(--accent-purple);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease;
+  }
+
+  .prose-modern a[href^="#"]:hover {
+    color: var(--accent-cyan);
+    border-bottom-color: var(--accent-cyan);
+  }
+</style>
+
+<script>
+  // Enhanced smooth scrolling for anchor links
+  document.addEventListener('DOMContentLoaded', function() {
+    // Handle all anchor links (table of contents, in-page links)
+    const anchorLinks = document.querySelectorAll('a[href^="#"]');
+
+    anchorLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+
+        // Skip if it's just "#" or empty
+        if (!href || href === '#') return;
+
+        const targetId = href.substring(1);
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          e.preventDefault();
+
+          // Smooth scroll to the target element
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+            inline: 'nearest'
+          });
+
+          // Update URL without triggering page reload
+          if (history.pushState) {
+            history.pushState(null, null, href);
+          }
+
+          // Optional: Add a subtle highlight effect to the target
+          targetElement.style.transition = 'background-color 0.3s ease';
+          const originalBg = targetElement.style.backgroundColor;
+          targetElement.style.backgroundColor = 'rgba(0, 255, 65, 0.1)';
+
+          setTimeout(() => {
+            targetElement.style.backgroundColor = originalBg;
+          }, 1000);
+        }
+      });
+    });
+
+    // Handle direct navigation to anchors (e.g., from external links)
+    function scrollToAnchorOnLoad() {
+      const hash = window.location.hash;
+      if (hash) {
+        const targetElement = document.querySelector(hash);
+        if (targetElement) {
+          // Small delay to ensure page is fully loaded
+          setTimeout(() => {
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+              inline: 'nearest'
+            });
+          }, 100);
+        }
+      }
+    }
+
+    // Scroll to anchor on page load
+    scrollToAnchorOnLoad();
+
+    // Handle browser back/forward navigation
+    window.addEventListener('popstate', scrollToAnchorOnLoad);
+  });
+</script>

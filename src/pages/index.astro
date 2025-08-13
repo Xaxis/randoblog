@@ -1,0 +1,235 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog', ({ data }) => {
+  return !data.draft;
+});
+
+// Sort posts by date (newest first)
+posts.sort((a, b) => {
+  const dateA = a.data.pubDate ? new Date(a.data.pubDate) : new Date(0);
+  const dateB = b.data.pubDate ? new Date(b.data.pubDate) : new Date(0);
+  return dateB.getTime() - dateA.getTime();
+});
+
+// Get initial posts (latest 10)
+const recentPosts = posts.slice(0, 10);
+
+function formatDate(date: Date | string | undefined) {
+  if (!date) return 'Unknown date';
+  const dateObj = date instanceof Date ? date : new Date(date);
+  if (isNaN(dateObj.getTime())) return 'Unknown date';
+  return dateObj.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
+}
+---
+
+<Layout title="RANDOBLOG - Modern Retro Tech Blog" description="A modern retro-styled blog exploring technology, mathematics, and random thoughts">
+
+  <!-- Recent Posts Section -->
+  <section class="px-6 pb-16">
+    <div class="max-w-4xl mx-auto">
+
+      {recentPosts.length === 0 ? (
+        <div class="text-center py-24">
+          <div class="card max-w-md mx-auto">
+            <div class="text-text-muted mb-4">
+              No posts yet
+            </div>
+            <div class="text-text-muted text-sm">
+              Check back soon for new content!
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div id="posts-container" class="space-y-8">
+          {recentPosts.map((post) => (
+            <article class="card hover:border-accent-purple/30 transition-all duration-300 group">
+              <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4 gap-2">
+                <h3 class="text-xl font-semibold text-text-primary group-hover:text-accent-purple transition-colors duration-300 lg:flex-1 lg:pr-4">
+                  <a href={`/randoblog/blog/${post.id}`}>
+                    {post.data?.data?.title || post.data?.title || post.id}
+                  </a>
+                </h3>
+                <div class="text-text-muted text-sm lg:flex-shrink-0 lg:text-right lg:min-w-[100px]">
+                  {formatDate(post.data?.data?.pubDate || post.data?.pubDate)}
+                </div>
+              </div>
+
+              <p class="text-text-secondary mb-4 leading-relaxed">
+                {post.data?.data?.description || post.data?.description || 'No description available'}
+              </p>
+
+              <div class="flex flex-wrap gap-2 mb-4">
+                {(post.data?.data?.tags || post.data?.tags) && (post.data?.data?.tags || post.data?.tags).length > 0 && (post.data?.data?.tags || post.data?.tags).map((tag) => (
+                  <span class="tag-secondary">
+                    {tag}
+                  </span>
+                ))}
+                {(post.data?.data?.repository || post.data?.repository) && (
+                  <span class="tag-primary">
+                    📁 {post.data?.data?.repository || post.data?.repository}
+                  </span>
+                )}
+              </div>
+
+              <div class="flex items-center justify-between">
+                <a href={`/randoblog/blog/${post.id}`} class="text-accent-purple hover:text-accent-cyan transition-colors duration-200 font-medium">
+                  Read more →
+                </a>
+                {(post.data?.data?.repositoryUrl || post.data?.repositoryUrl) && (
+                  <a href={post.data?.data?.repositoryUrl || post.data?.repositoryUrl} target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-accent-secondary transition-colors duration-200 text-sm">
+                    View on GitHub ↗
+                  </a>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+
+      <!-- Loading indicator -->
+      <div id="loading-indicator" class="hidden text-center py-8">
+        <div class="inline-flex items-center space-x-2 text-text-muted">
+          <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-accent-primary"></div>
+          <span>Loading more posts...</span>
+        </div>
+      </div>
+
+      <!-- End of posts indicator -->
+      <div id="end-indicator" class="hidden text-center py-8">
+        <div class="text-text-muted text-sm">
+          You've reached the end of all posts
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+<script>
+  // Infinite scroll functionality
+  let currentPage = 1;
+  let isLoading = false;
+  let hasMore = true;
+
+  const postsContainer = document.getElementById('posts-container');
+  const loadingIndicator = document.getElementById('loading-indicator');
+  const endIndicator = document.getElementById('end-indicator');
+
+  // Format date function for client-side rendering
+  function formatDate(dateString) {
+    if (!dateString) return 'Unknown date';
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return 'Unknown date';
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  }
+
+  // Create post HTML
+  function createPostHTML(post) {
+    const tags = post.tags || [];
+    const tagsHTML = tags.map(tag =>
+      `<span class="tag-secondary">${tag}</span>`
+    ).join('');
+
+    const repositoryHTML = post.repository ?
+      `<span class="tag-primary">📁 ${post.repository}</span>` : '';
+
+    const githubLinkHTML = post.repositoryUrl ?
+      `<a href="${post.repositoryUrl}" target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-accent-secondary transition-colors duration-200 text-sm">
+        View on GitHub ↗
+      </a>` : '';
+
+    return `
+      <article class="card hover:border-accent-purple/30 transition-all duration-300 group">
+        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4 gap-2">
+          <h3 class="text-xl font-semibold text-text-primary group-hover:text-accent-purple transition-colors duration-300 lg:flex-1 lg:pr-4">
+            <a href="${post.url}">
+              ${post.title}
+            </a>
+          </h3>
+          <div class="text-text-muted text-sm lg:flex-shrink-0 lg:text-right lg:min-w-[100px]">
+            ${formatDate(post.pubDate)}
+          </div>
+        </div>
+
+        <p class="text-text-secondary mb-4 leading-relaxed">
+          ${post.description}
+        </p>
+
+        <div class="flex flex-wrap gap-2 mb-4">
+          ${tagsHTML}
+          ${repositoryHTML}
+        </div>
+
+        <div class="flex items-center justify-between">
+          <a href="${post.url}" class="text-accent-purple hover:text-accent-cyan transition-colors duration-200 font-medium">
+            Read more →
+          </a>
+          ${githubLinkHTML}
+        </div>
+      </article>
+    `;
+  }
+
+  // Load more posts
+  async function loadMorePosts() {
+    if (isLoading || !hasMore) return;
+
+    isLoading = true;
+    loadingIndicator.classList.remove('hidden');
+
+    try {
+      const response = await fetch(`/randoblog/api/posts.json?page=${currentPage + 1}&limit=10`);
+      const data = await response.json();
+
+      if (data.posts && data.posts.length > 0) {
+        data.posts.forEach(post => {
+          const postElement = document.createElement('div');
+          postElement.innerHTML = createPostHTML(post);
+          postsContainer.appendChild(postElement.firstElementChild);
+        });
+
+        currentPage++;
+        hasMore = data.hasMore;
+      } else {
+        hasMore = false;
+      }
+
+      if (!hasMore) {
+        endIndicator.classList.remove('hidden');
+      }
+    } catch (error) {
+      console.error('Error loading more posts:', error);
+    } finally {
+      isLoading = false;
+      loadingIndicator.classList.add('hidden');
+    }
+  }
+
+  // Intersection Observer for infinite scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && hasMore && !isLoading) {
+        loadMorePosts();
+      }
+    });
+  }, {
+    rootMargin: '100px'
+  });
+
+  // Start observing the loading indicator
+  if (loadingIndicator) {
+    observer.observe(loadingIndicator);
+  }
+</script>
+
+</Layout>

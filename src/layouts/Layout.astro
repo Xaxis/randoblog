@@ -1,0 +1,230 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "A retro-styled blog with 8-bit aesthetics" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO and Social Media -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Accessibility -->
+    <meta name="theme-color" content="#00ff41" />
+
+    <!-- KaTeX CSS for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-YgKpweIXyMVZjKsOXn5wusO2YA7rGzQeuOLhqJXmYkTkPvB9KZGAcKUzx0KrYmKt" crossorigin="anonymous">
+    <meta name="color-scheme" content="dark" />
+
+    <title>{title}</title>
+
+    <!-- Global smooth scrolling styles -->
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Add scroll margin to all headings to account for any fixed headers */
+      h1, h2, h3, h4, h5, h6 {
+        scroll-margin-top: 2rem;
+      }
+    </style>
+    
+
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="bg-bg-primary/95 backdrop-blur-md sticky top-0 z-50 shadow-lg shadow-bg-secondary/20" role="banner">
+      <div class="max-w-4xl mx-auto px-6 py-6">
+        <nav class="flex items-center justify-between" role="navigation" aria-label="Main navigation">
+          <!-- Logo/Brand with tagline -->
+          <a href="/randoblog/" class="group" aria-label="RANDOBLOG home">
+            <div>
+              <h1 class="text-2xl font-display font-bold bg-gradient-to-r from-accent-purple to-accent-cyan bg-clip-text text-transparent group-hover:opacity-80 transition-opacity">
+                RANDOBLOG
+              </h1>
+              <p class="text-xs text-text-muted mt-1 font-medium tracking-wide">
+                Random Thoughts & Projects of a Wannabe Scientist
+              </p>
+            </div>
+          </a>
+
+          <!-- Navigation Links and Theme Toggle -->
+          <div class="flex items-center space-x-6">
+            <a href="/randoblog/" class="text-text-secondary hover:text-accent-purple transition-colors duration-200 font-medium">
+              Home
+            </a>
+            <a href="/randoblog/about/" class="text-text-secondary hover:text-accent-purple transition-colors duration-200 font-medium">
+              About
+            </a>
+
+            <!-- Theme Toggle -->
+            <button
+              id="theme-toggle"
+              class="p-2 rounded-lg bg-bg-tertiary hover:bg-accent-primary/10 transition-all duration-200 shadow-sm hover:shadow-md"
+              aria-label="Toggle theme"
+            >
+              <svg id="theme-icon-dark" class="w-4 h-4 text-text-secondary" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+              </svg>
+              <svg id="theme-icon-light" class="w-4 h-4 text-text-secondary hidden" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+              </svg>
+            </button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="min-h-screen relative z-10" role="main">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-bg-secondary/50 mt-32" role="contentinfo">
+      <div class="max-w-4xl mx-auto px-6 py-16">
+        <div class="text-center space-y-6">
+          <div class="text-text-muted text-xs opacity-60">
+            © 2025 RANDOBLOG
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
+    <!-- Theme Toggle Script -->
+    <script>
+      // Theme toggle functionality
+      const themeToggle = document.getElementById('theme-toggle');
+      const darkIcon = document.getElementById('theme-icon-dark');
+      const lightIcon = document.getElementById('theme-icon-light');
+      const html = document.documentElement;
+
+      // Check for saved theme preference or default to dark
+      const currentTheme = localStorage.getItem('theme') || 'dark';
+      html.setAttribute('data-theme', currentTheme);
+
+      // Update icon visibility
+      function updateIcons(theme) {
+        if (theme === 'dark') {
+          darkIcon.classList.remove('hidden');
+          lightIcon.classList.add('hidden');
+        } else {
+          darkIcon.classList.add('hidden');
+          lightIcon.classList.remove('hidden');
+        }
+      }
+
+      updateIcons(currentTheme);
+
+      // Toggle theme
+      themeToggle.addEventListener('click', () => {
+        const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateIcons(newTheme);
+      });
+    </script>
+
+    <!-- Global smooth scrolling for anchor links -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Handle all anchor links globally
+        function handleAnchorLinks() {
+          const anchorLinks = document.querySelectorAll('a[href^="#"]');
+
+          anchorLinks.forEach(link => {
+            // Remove existing listeners to avoid duplicates
+            link.removeEventListener('click', handleAnchorClick);
+            link.addEventListener('click', handleAnchorClick);
+          });
+        }
+
+        function handleAnchorClick(e) {
+          const href = this.getAttribute('href');
+
+          // Skip if it's just "#" or empty
+          if (!href || href === '#') return;
+
+          const targetId = href.substring(1);
+          const targetElement = document.getElementById(targetId);
+
+          if (targetElement) {
+            e.preventDefault();
+
+            // Smooth scroll to the target element
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+              inline: 'nearest'
+            });
+
+            // Update URL without triggering page reload
+            if (history.pushState) {
+              history.pushState(null, null, href);
+            }
+          }
+        }
+
+        // Handle direct navigation to anchors (e.g., from external links)
+        function scrollToAnchorOnLoad() {
+          const hash = window.location.hash;
+          if (hash) {
+            const targetElement = document.querySelector(hash);
+            if (targetElement) {
+              // Small delay to ensure page is fully loaded
+              setTimeout(() => {
+                targetElement.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start',
+                  inline: 'nearest'
+                });
+              }, 100);
+            }
+          }
+        }
+
+        // Initialize anchor link handling
+        handleAnchorLinks();
+
+        // Scroll to anchor on page load
+        scrollToAnchorOnLoad();
+
+        // Handle browser back/forward navigation
+        window.addEventListener('popstate', scrollToAnchorOnLoad);
+
+        // Re-initialize anchor links when new content is loaded (for dynamic content)
+        const observer = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+              handleAnchorLinks();
+            }
+          });
+        });
+
+        observer.observe(document.body, {
+          childList: true,
+          subtree: true
+        });
+      });
+    </script>
+  </body>
+</html>

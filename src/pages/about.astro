@@ -1,0 +1,144 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About - RANDOBLOG" description="Learn about the person behind RANDOBLOG – a self-proclaimed wannabe scientist with questionable lab safety habits and big dreams">
+    <div class="max-w-4xl mx-auto px-6 py-24">
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-display font-bold text-text-primary mb-6">
+                About Me
+            </h1>
+            <p class="text-xl text-text-secondary">
+                World’s most ambitious wannabe scientist (pending… forever)
+            </p>
+        </div>
+
+        <!-- Main content -->
+        <div class="space-y-16">
+            <!-- Mission Statement -->
+            <section class="card">
+                <h2 class="text-2xl font-display font-semibold text-text-primary mb-6">
+                    What is RANDOBLOG?
+                </h2>
+                <div class="space-y-4 text-text-secondary leading-relaxed">
+                    <p>
+                        RANDOBLOG is where I pour my over-caffeinated curiosity into pixels. It’s an ever-shifting collection of ideas, experiments, and rabbit holes I’ve fallen into – ranging from physics and computer science to “what happens if I mix these two entirely unrelated concepts and hope it doesn’t explode.”
+                    </p>
+                    <p>
+                        Think of it as my digital notebook-slash-laboratory, except without the risk of spilling acid on my shoes (again). I may not have a Nobel Prize (yet, or ever), but I’m here for the joy of exploration, a pinch of absurdity, and the occasional “Eureka!” moment that usually turns out to be me rediscovering something from 1893.
+                    </p>
+                </div>
+            </section>
+
+            <!-- About Me -->
+            <section class="card">
+                <h2 class="text-2xl font-display font-semibold text-text-primary mb-6">
+                    About Me
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-4 bg-bg-tertiary rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+                        <div class="text-accent-purple font-medium mb-2">
+                            Academic Credentials
+                        </div>
+                        <div class="text-text-secondary text-sm">
+                            None that would impress a hiring committee, but I own a suspicious number of lab coats.
+                        </div>
+                    </div>
+                    <div class="p-4 bg-bg-tertiary rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+                        <div class="text-accent-cyan font-medium mb-2">
+                            Experimental Skills
+                        </div>
+                        <div class="text-text-secondary text-sm">
+                            Adept at pushing buttons I probably shouldn’t and Googling “is it supposed to smoke like that?”
+                        </div>
+                    </div>
+                    <div class="p-4 bg-bg-tertiary rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+                        <div class="text-accent-purple font-medium mb-2">
+                            Scientific Focus
+                        </div>
+                        <div class="text-text-secondary text-sm">
+                            Whatever currently keeps me awake at 2 AM – quantum weirdness, black holes, or why my coffee tastes metallic.
+                        </div>
+                    </div>
+                    <div class="p-4 bg-bg-tertiary rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+                        <div class="text-accent-cyan font-medium mb-2">
+                            Long-Term Goal
+                        </div>
+                        <div class="text-text-secondary text-sm">
+                            To someday be mistaken for an actual scientist in a dimly lit conference hallway.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features -->
+            <section class="card">
+                <h2 class="text-2xl font-display font-semibold text-text-primary mb-6">
+                    Key Features of This Blog
+                </h2>
+                <p class="text-text-secondary mb-8">
+                    In case you’re wondering what you’ve stumbled into:
+                </p>
+
+                <div class="space-y-8">
+                    <div class="p-6 bg-bg-tertiary rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+                        <div class="text-accent-purple font-medium mb-3">Mathematical Content:</div>
+                        <p class="text-text-secondary">
+                            Supports full LaTeX rendering, because math is beautiful… even when I’m using it to prove something completely trivial.
+                        </p>
+                    </div>
+
+                    <div class="p-6 bg-bg-tertiary rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+                        <div class="text-accent-cyan font-medium mb-3">Live Content:</div>
+                        <p class="text-text-secondary">
+                            Automatically synced from GitHub so my bad ideas update in real time.
+                        </p>
+                    </div>
+
+                    <div class="p-6 bg-bg-tertiary rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+                        <div class="text-accent-purple font-medium mb-3">Research Focus:</div>
+                        <p class="text-text-secondary">
+                            Physics, AI, space stuff, and anything else that lets me pretend I’m in a sci-fi movie.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA -->
+            <section class="text-center">
+                <div class="card">
+                    <h2 class="text-2xl font-display font-semibold text-text-primary mb-6">
+                        Ready to explore?
+                    </h2>
+                    <p class="text-text-secondary mb-8">
+                        Enter the chaos. It’s educational… probably.
+                    </p>
+                    <a href="/randoblog/" class="btn-primary">
+                        View Posts
+                    </a>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- KaTeX CSS and JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+
+    <!-- Initialize KaTeX auto-render -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        });
+    </script>
+</Layout>
