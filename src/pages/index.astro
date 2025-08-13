@@ -31,7 +31,7 @@ function formatDate(date: Date | string | undefined) {
 <Layout title="RANDOBLOG - Modern Retro Tech Blog" description="A modern retro-styled blog exploring technology, mathematics, and random thoughts">
 
   <!-- Recent Posts Section -->
-  <section class="px-6 pb-16">
+  <section class="px-6 pt-12 pb-16">
     <div class="max-w-4xl mx-auto">
 
       {recentPosts.length === 0 ? (
@@ -46,12 +46,13 @@ function formatDate(date: Date | string | undefined) {
           </div>
         </div>
       ) : (
+              <!-- Posts Container -->
         <div id="posts-container" class="space-y-8">
           {recentPosts.map((post) => (
-            <article class="card hover:border-accent-purple/30 transition-all duration-300 group">
+            <article class="card hover:border-accent-primary/30 transition-all duration-300 group">
               <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4 gap-2">
-                <h3 class="text-xl font-semibold text-text-primary group-hover:text-accent-purple transition-colors duration-300 lg:flex-1 lg:pr-4">
-                  <a href={`/randoblog/blog/${post.id}`}>
+                <h3 class="text-xl font-semibold text-text-primary group-hover:text-accent-primary transition-colors duration-300 lg:flex-1 lg:pr-4">
+                  <a href={`/blog/${post.id}`}>
                     {post.data?.data?.title || post.data?.title || post.id}
                   </a>
                 </h3>
@@ -78,7 +79,7 @@ function formatDate(date: Date | string | undefined) {
               </div>
 
               <div class="flex items-center justify-between">
-                <a href={`/randoblog/blog/${post.id}`} class="text-accent-purple hover:text-accent-cyan transition-colors duration-200 font-medium">
+                <a href={`/blog/${post.id}`} class="text-accent-primary hover:text-accent-secondary transition-colors duration-200 font-medium">
                   Read more →
                 </a>
                 {(post.data?.data?.repositoryUrl || post.data?.repositoryUrl) && (
@@ -149,9 +150,9 @@ function formatDate(date: Date | string | undefined) {
       </a>` : '';
 
     return `
-      <article class="card hover:border-accent-purple/30 transition-all duration-300 group">
+      <article class="card hover:border-accent-primary/30 transition-all duration-300 group">
         <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4 gap-2">
-          <h3 class="text-xl font-semibold text-text-primary group-hover:text-accent-purple transition-colors duration-300 lg:flex-1 lg:pr-4">
+          <h3 class="text-xl font-semibold text-text-primary group-hover:text-accent-primary transition-colors duration-300 lg:flex-1 lg:pr-4">
             <a href="${post.url}">
               ${post.title}
             </a>
@@ -188,7 +189,7 @@ function formatDate(date: Date | string | undefined) {
     loadingIndicator.classList.remove('hidden');
 
     try {
-      const response = await fetch(`/randoblog/api/posts.json?page=${currentPage + 1}&limit=10`);
+      const response = await fetch(`/api/posts.json?page=${currentPage + 1}&limit=10`);
       const data = await response.json();
 
       if (data.posts && data.posts.length > 0) {

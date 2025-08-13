@@ -32,7 +32,7 @@ export const GET: APIRoute = async ({ url }) => {
       tags: post.data?.data?.tags || post.data?.tags || [],
       repository: post.data?.data?.repository || post.data?.repository,
       repositoryUrl: post.data?.data?.repositoryUrl || post.data?.repositoryUrl,
-      url: `/randoblog/blog/${post.id}`
+      url: `/blog/${post.id}`
     }));
 
     return new Response(JSON.stringify({

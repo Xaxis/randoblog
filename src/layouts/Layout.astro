@@ -15,7 +15,8 @@ const { title, description = "A retro-styled blog with 8-bit aesthetics" } = Ast
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
 
     <!-- SEO and Social Media -->
@@ -55,12 +56,19 @@ const { title, description = "A retro-styled blog with 8-bit aesthetics" } = Ast
       <div class="max-w-4xl mx-auto px-6 py-6">
         <nav class="flex items-center justify-between" role="navigation" aria-label="Main navigation">
           <!-- Logo/Brand with tagline -->
-          <a href="/randoblog/" class="group" aria-label="RANDOBLOG home">
-            <div>
-              <h1 class="text-2xl font-display font-bold bg-gradient-to-r from-accent-purple to-accent-cyan bg-clip-text text-transparent group-hover:opacity-80 transition-opacity">
+          <a href="/" class="group flex items-center space-x-4" aria-label="RANDOBLOG home">
+            <div class="flex-shrink-0">
+              <img
+                src="/logo.png"
+                alt="RANDOBLOG Robot Logo"
+                class="h-20 w-20 md:h-24 md:w-24 transition-transform duration-200 group-hover:scale-105 group-hover:rotate-2"
+              />
+            </div>
+            <div class="flex flex-col justify-center h-20 md:h-24">
+              <h1 class="text-xl md:text-2xl font-display font-bold bg-gradient-to-r from-accent-primary to-accent-secondary bg-clip-text text-transparent group-hover:opacity-80 transition-opacity leading-none -mb-4">
                 RANDOBLOG
               </h1>
-              <p class="text-xs text-text-muted mt-1 font-medium tracking-wide">
+              <p class="text-xs md:text-sm text-text-muted font-medium tracking-wide leading-none -mt-3">
                 Random Thoughts & Projects of a Wannabe Scientist
               </p>
             </div>
@@ -68,10 +76,10 @@ const { title, description = "A retro-styled blog with 8-bit aesthetics" } = Ast
 
           <!-- Navigation Links and Theme Toggle -->
           <div class="flex items-center space-x-6">
-            <a href="/randoblog/" class="text-text-secondary hover:text-accent-purple transition-colors duration-200 font-medium">
+            <a href="/" class="text-text-secondary hover:text-accent-primary transition-colors duration-200 font-medium">
               Home
             </a>
-            <a href="/randoblog/about/" class="text-text-secondary hover:text-accent-purple transition-colors duration-200 font-medium">
+            <a href="/about/" class="text-text-secondary hover:text-accent-primary transition-colors duration-200 font-medium">
               About
             </a>
 
