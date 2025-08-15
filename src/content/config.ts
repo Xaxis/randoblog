@@ -2,6 +2,7 @@ import { defineCollection, z } from 'astro:content';
 
 // GitHub repositories to fetch README content from
 const GITHUB_REPOS = [
+    'Xaxis/uapwatch-cubesat',
     'Xaxis/beyond-radio',
     'Xaxis/bitcoin-proof-of-ownership',
     'Xaxis/entangled-black-hole-network',
