@@ -2,6 +2,7 @@ import { defineCollection, z } from 'astro:content';
 
 // GitHub repositories to fetch README content from
 const GITHUB_REPOS = [
+    'Xaxis/metrics-to-metal-physical-warp-drives',
     'Xaxis/through-a-wormhole',
     'Xaxis/btc-ar-post',
     'Xaxis/detecting-the-graviton',
@@ -129,7 +130,7 @@ const githubLoader = async () => {
             };
 
             const entry = {
-              id: repo.replace('/', '-'),
+              id: repo.replace('/', '-').toLowerCase(),
               body: body.trim(),
               data: entryData
             };
@@ -235,7 +236,7 @@ const githubLoader = async () => {
       };
 
       const entry = {
-        id: repo.replace('/', '-'),
+        id: repo.replace('/', '-').toLowerCase(),
         body: body.trim(),
         data: entryData
       };
