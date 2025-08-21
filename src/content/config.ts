@@ -2,6 +2,9 @@ import { defineCollection, z } from 'astro:content';
 
 // GitHub repositories to fetch README content from
 const GITHUB_REPOS = [
+    'Xaxis/bitcoin-saves-humans-from-ai-redundancy',
+    'Xaxis/quantum-brains-disembodied-ai',
+    'Xaxis/how-bitcoin-quietly-defunds-the-fed',
     'Xaxis/metrics-to-metal-physical-warp-drives',
     'Xaxis/through-a-wormhole',
     'Xaxis/btc-ar-post',
