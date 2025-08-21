@@ -29,19 +29,24 @@ const { title, description = "A retro-styled blog with 8-bit aesthetics" } = Ast
     <link rel="apple-touch-icon" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
 
+
+
     <!-- SEO and Social Media -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="https://randoblog.me/logo.png" />
+    <meta property="og:url" content="https://randoblog.me" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://randoblog.me/logo.png" />
 
     <!-- Accessibility -->
     <meta name="theme-color" content="#00ff41" />
 
-    <!-- KaTeX CSS for math rendering -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css" integrity="sha384-YgKpweIXyMVZjKsOXn5wusO2YA7rGzQeuOLhqJXmYkTkPvB9KZGAcKUzx0KrYmKt" crossorigin="anonymous">
+    <!-- KaTeX CSS for math rendering (local) -->
+    <link rel="stylesheet" href="/katex.min.css" />
     <meta name="color-scheme" content="dark" />
 
     <title>{title}</title>
@@ -117,7 +122,7 @@ const { title, description = "A retro-styled blog with 8-bit aesthetics" } = Ast
               aria-label="Toggle theme"
             >
               <svg id="theme-icon-dark-mobile" class="w-4 h-4 text-text-secondary" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M17.293 13.293A8 8 0 716.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
               </svg>
               <svg id="theme-icon-light-mobile" class="w-4 h-4 text-text-secondary hidden" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
@@ -160,12 +165,33 @@ const { title, description = "A retro-styled blog with 8-bit aesthetics" } = Ast
     </main>
 
     <!-- Footer -->
-    <footer class="bg-bg-secondary/50 mt-32" role="contentinfo">
-      <div class="max-w-4xl mx-auto px-6 py-16">
-        <div class="text-center space-y-6">
-          <div class="text-text-muted text-xs opacity-60">
-            © 2025 RANDOBLOG
-          </div>
+    <footer class="mt-32 py-8 text-center" role="contentinfo">
+      <div class="max-w-4xl mx-auto px-6">
+        <!-- Subtle separator line -->
+        <div class="w-24 h-px bg-gradient-to-r from-transparent via-border-color/20 to-transparent mx-auto mb-6"></div>
+
+        <div class="flex items-center justify-center space-x-4 text-xs text-text-muted/50">
+          <span class="font-mono">© 2025 RANDOBLOG</span>
+          <span class="text-text-muted/30">•</span>
+          <a
+            href="https://github.com/Xaxis"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-text-muted transition-colors duration-200"
+            aria-label="GitHub"
+          >
+            GitHub
+          </a>
+          <span class="text-text-muted/30">•</span>
+          <a
+            href="https://x.com/TheBTCViking"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-text-muted transition-colors duration-200"
+            aria-label="X"
+          >
+            X
+          </a>
         </div>
       </div>
     </footer>

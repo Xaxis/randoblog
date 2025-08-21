@@ -1,0 +1,457 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths({ paginate }) {
+  const posts = await getCollection('blog', ({ data }) => {
+    return !data.draft;
+  });
+
+  // Sort posts by date (newest first)
+  posts.sort((a, b) => {
+    const dateA = a.data?.data?.pubDate || a.data?.pubDate ? new Date(a.data?.data?.pubDate || a.data?.pubDate) : new Date(0);
+    const dateB = b.data?.data?.pubDate || b.data?.pubDate ? new Date(b.data?.data?.pubDate || b.data?.pubDate) : new Date(0);
+    return dateB.getTime() - dateA.getTime();
+  });
+
+  return paginate(posts, { pageSize: 10, props: { allPosts: posts } });
+}
+
+const { page } = Astro.props;
+const recentPosts = page.data;
+const allPosts = Astro.props.allPosts;
+
+function formatDate(date: Date | string | undefined) {
+  if (!date) return 'Unknown date';
+  const dateObj = date instanceof Date ? date : new Date(date);
+  if (isNaN(dateObj.getTime())) return 'Unknown date';
+  return dateObj.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  });
+}
+---
+
+<Layout
+  title={page.currentPage === 1
+    ? "RANDOBLOG - Random Thoughts & Projects of a Wannabe Scientist"
+    : `RANDOBLOG - Page ${page.currentPage} - Random Thoughts & Projects of a Wannabe Scientist`
+  }
+  description={page.currentPage === 1
+    ? "A blog containing random thoughts and projects of a wannabe scientist"
+    : `Page ${page.currentPage} of random thoughts and projects of a wannabe scientist`
+  }
+>
+
+  <!-- Recent Posts Section -->
+  <section class="px-6 pt-12 pb-16">
+    <div class="max-w-4xl mx-auto">
+
+      <!-- Minimalistic Meta Row with Search -->
+      <div class="flex items-center justify-between mb-8 pb-3 border-b border-border-color/20">
+        <div class="flex items-center space-x-3 text-sm text-text-muted/70">
+          <span class="font-medium text-text-secondary">{page.total} articles</span>
+          <span class="w-1 h-1 bg-text-muted/30 rounded-full"></span>
+          <span>Page {page.currentPage} of {page.lastPage}</span>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="flex items-center">
+          <div class="relative">
+            <button
+              id="search-trigger"
+              class="flex items-center space-x-2 px-3 py-1.5 text-xs text-text-muted/60 bg-bg-secondary/50 hover:bg-bg-tertiary/50 border border-border-color/30 hover:border-border-color/50 rounded-md transition-all duration-200 group"
+              aria-label="Search articles"
+            >
+              <svg class="w-3.5 h-3.5 group-hover:text-accent-primary transition-colors" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="hidden sm:inline">Search</span>
+              <kbd class="hidden sm:inline-flex items-center px-1.5 py-0.5 text-xs font-mono text-text-muted/50 bg-bg-tertiary/50 border border-border-color/30 rounded">⌘K</kbd>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search Overlay -->
+      <div id="search-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-md hidden" style="z-index: 999999;">
+        <div class="flex items-center justify-center min-h-screen px-4 py-16">
+          <div class="w-full max-w-2xl card overflow-hidden">
+            <!-- Search Input -->
+            <div class="flex items-center p-6 border-b border-accent-primary/20">
+              <svg class="w-5 h-5 text-accent-purple mr-3" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+              </svg>
+              <input
+                id="search-input"
+                type="text"
+                placeholder="Search articles..."
+                class="flex-1 bg-transparent text-text-primary placeholder-text-muted/60 outline-none text-lg"
+                autocomplete="off"
+              />
+              <button
+                id="search-close"
+                class="ml-3 p-2 text-text-muted hover:text-accent-primary transition-colors rounded-lg hover:bg-bg-tertiary"
+                aria-label="Close search"
+              >
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Search Results -->
+            <div id="search-results" class="max-h-80 overflow-y-auto">
+              <div id="search-empty" class="p-8 text-center text-text-muted/60">
+                <svg class="w-12 h-12 mx-auto mb-4 opacity-40" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                </svg>
+                <p class="text-sm">Start typing to search articles...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {recentPosts.length === 0 ? (
+        <div class="text-center py-24">
+          <div class="card max-w-md mx-auto">
+            <div class="text-text-muted mb-4">
+              No posts yet
+            </div>
+            <div class="text-text-muted text-sm">
+              Check back soon for new content!
+            </div>
+          </div>
+        </div>
+      ) : (
+              <!-- Posts Container -->
+        <div id="posts-container" class="space-y-8">
+          {recentPosts.map((post) => (
+            <article class="card hover:border-accent-primary/30 transition-all duration-300 group">
+              <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4 gap-2">
+                <h3 class="text-xl font-semibold text-text-primary group-hover:text-accent-primary transition-colors duration-300 lg:flex-1 lg:pr-4">
+                  <a href={`/blog/${post.id}`}>
+                    {post.data?.data?.title || post.data?.title || post.id}
+                  </a>
+                </h3>
+                <div class="text-text-muted text-sm lg:flex-shrink-0 lg:text-right lg:min-w-[100px]">
+                  {formatDate(post.data?.data?.pubDate || post.data?.pubDate)}
+                </div>
+              </div>
+
+              <p class="text-text-secondary mb-4 leading-relaxed">
+                {post.data?.data?.description || post.data?.description || 'No description available'}
+              </p>
+
+              <div class="flex flex-wrap gap-2 mb-4">
+                {(post.data?.data?.tags || post.data?.tags) && (post.data?.data?.tags || post.data?.tags).length > 0 && (post.data?.data?.tags || post.data?.tags).map((tag) => (
+                  <span class="tag-secondary">
+                    {tag}
+                  </span>
+                ))}
+                {(post.data?.data?.repository || post.data?.repository) && (
+                  <span class="tag-primary">
+                    📁 {post.data?.data?.repository || post.data?.repository}
+                  </span>
+                )}
+              </div>
+
+              <div class="flex items-center justify-between">
+                <a href={`/blog/${post.id}`} class="text-accent-primary hover:text-accent-secondary transition-colors duration-200 font-medium">
+                  Read more →
+                </a>
+                {(post.data?.data?.repositoryUrl || post.data?.repositoryUrl) && (
+                  <a href={post.data?.data?.repositoryUrl || post.data?.repositoryUrl} target="_blank" rel="noopener noreferrer" class="text-text-muted hover:text-accent-secondary transition-colors duration-200 text-sm">
+                    View on GitHub ↗
+                  </a>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <!-- Pagination -->
+        {page.lastPage > 1 && (
+          <nav class="mt-16" aria-label="Pagination">
+            <!-- Mobile Pagination (Simple) -->
+            <div class="flex justify-between items-center sm:hidden">
+              {page.url.prev ? (
+                <a
+                  href={page.url.prev}
+                  class="flex items-center px-4 py-2 text-sm font-medium text-text-secondary bg-bg-secondary hover:bg-bg-tertiary hover:text-accent-primary border border-border-color rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
+                  aria-label="Go to previous page"
+                >
+                  <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                  Previous
+                </a>
+              ) : (
+                <div></div>
+              )}
+
+              <span class="text-sm text-text-muted font-medium">
+                Page {page.currentPage} of {page.lastPage}
+              </span>
+
+              {page.url.next ? (
+                <a
+                  href={page.url.next}
+                  class="flex items-center px-4 py-2 text-sm font-medium text-text-secondary bg-bg-secondary hover:bg-bg-tertiary hover:text-accent-primary border border-border-color rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
+                  aria-label="Go to next page"
+                >
+                  Next
+                  <svg class="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                </a>
+              ) : (
+                <div></div>
+              )}
+            </div>
+
+            <!-- Desktop Pagination (Full) -->
+            <div class="hidden sm:flex justify-center">
+              <div class="flex items-center space-x-2">
+                <!-- Previous Page -->
+                {page.url.prev && (
+                  <a
+                    href={page.url.prev}
+                    class="flex items-center px-4 py-2 text-sm font-medium text-text-secondary bg-bg-secondary hover:bg-bg-tertiary hover:text-accent-primary border border-border-color rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
+                    aria-label="Go to previous page"
+                  >
+                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    Previous
+                  </a>
+                )}
+
+                <!-- Page Numbers -->
+                <div class="flex items-center space-x-1">
+                  {Array.from({ length: page.lastPage }, (_, i) => i + 1).map((pageNum) => {
+                    const isCurrentPage = pageNum === page.currentPage;
+                    const pageUrl = pageNum === 1 ? '/' : `/${pageNum}`;
+
+                    return (
+                      <a
+                        href={pageUrl}
+                        class={`px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                          isCurrentPage
+                            ? 'bg-accent-primary text-white shadow-md'
+                            : 'text-text-secondary bg-bg-secondary hover:bg-bg-tertiary hover:text-accent-primary border border-border-color shadow-sm hover:shadow-md'
+                        }`}
+                        aria-label={`Go to page ${pageNum}`}
+                        aria-current={isCurrentPage ? 'page' : undefined}
+                      >
+                        {pageNum}
+                      </a>
+                    );
+                  })}
+                </div>
+
+                <!-- Next Page -->
+                {page.url.next && (
+                  <a
+                    href={page.url.next}
+                    class="flex items-center px-4 py-2 text-sm font-medium text-text-secondary bg-bg-secondary hover:bg-bg-tertiary hover:text-accent-primary border border-border-color rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
+                    aria-label="Go to next page"
+                  >
+                    Next
+                    <svg class="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                  </a>
+                )}
+              </div>
+            </div>
+          </nav>
+        )}
+      )}
+
+
+    </div>
+  </section>
+
+
+
+
+
+</Layout>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Get search elements
+  const searchTrigger = document.getElementById('search-trigger');
+  const searchOverlay = document.getElementById('search-overlay');
+  const searchInput = document.getElementById('search-input');
+  const searchResults = document.getElementById('search-results');
+  const searchClose = document.getElementById('search-close');
+
+  console.log('Search elements:', { searchTrigger, searchOverlay, searchInput, searchResults, searchClose });
+
+  // Simple search data - hardcoded for now to test
+  const searchData = [
+    {
+      id: 'xaxis-bitcoin-saves-humans-from-ai-redundancy',
+      title: 'When AI Makes Half of Us Redundant: What Breaks, What Survives, and Why Bitcoin Matters',
+      description: 'A clear-eyed map of a world where AI drives 30–50% unemployment: the deflationary mechanics that strain capitalism, the policy toolkit we\'re likely to see (UBI, financial repression, CBDCs/stablecoins), and the narrow but real ways Bitcoin can protect individuals\' savings and settlement rights.',
+      tags: ['AI', 'automation', 'deflation', 'unemployment', 'capitalism', 'UBI', 'financial repression', 'CBDCs', 'stablecoins', 'Bitcoin', 'macro', 'future of work']
+    },
+    {
+      id: 'xaxis-uapwatch-cubesat',
+      title: 'UAP Watch CubeSat',
+      description: 'A CubeSat mission designed to monitor and analyze Unidentified Aerial Phenomena (UAP) using advanced sensor arrays and machine learning algorithms.',
+      tags: ['UAP', 'CubeSat', 'space', 'sensors', 'machine learning']
+    },
+    {
+      id: 'xaxis-beyond-radio',
+      title: 'Beyond Radio',
+      description: 'Exploring communication methods beyond traditional radio frequencies for interstellar communication.',
+      tags: ['communication', 'radio', 'interstellar', 'physics']
+    }
+  ];
+
+  // Search function
+  function performSearch(query) {
+    if (!query.trim()) {
+      showEmptyState();
+      return;
+    }
+
+    const results = searchData.filter(post => {
+      const searchText = (post.title + ' ' + post.description + ' ' + post.tags.join(' ')).toLowerCase();
+      return searchText.includes(query.toLowerCase());
+    }).slice(0, 6);
+
+    displayResults(results, query);
+  }
+
+  function showEmptyState() {
+    searchResults.innerHTML = `
+      <div class="p-8 text-center text-text-muted/60">
+        <p class="text-sm">Start typing to search articles...</p>
+      </div>
+    `;
+  }
+
+  function displayResults(results, query) {
+    if (results.length === 0) {
+      searchResults.innerHTML = `
+        <div class="p-8 text-center text-text-muted/60">
+          <p class="text-sm">No articles found for "${query}"</p>
+        </div>
+      `;
+      return;
+    }
+
+    const resultsHTML = results.map(post => `
+      <a href="/blog/${post.id}" class="block p-4 hover:bg-bg-tertiary/30 transition-colors border-b border-accent-primary/10 last:border-b-0 group">
+        <h3 class="font-semibold text-text-primary mb-2 group-hover:text-accent-purple transition-colors">${post.title}</h3>
+        <p class="text-sm text-text-secondary leading-relaxed">${post.description}</p>
+      </a>
+    `).join('');
+
+    searchResults.innerHTML = resultsHTML;
+  }
+
+  // Open search
+  function openSearch() {
+    console.log('Opening search');
+    searchOverlay.classList.remove('hidden');
+    setTimeout(() => searchInput.focus(), 100);
+  }
+
+  // Close search
+  function closeSearch() {
+    console.log('Closing search');
+    searchOverlay.classList.add('hidden');
+    searchInput.value = '';
+    showEmptyState();
+  }
+
+  // Event listeners
+  if (searchTrigger) {
+    searchTrigger.addEventListener('click', function(e) {
+      e.preventDefault();
+      console.log('Search button clicked');
+      openSearch();
+    });
+  }
+
+  if (searchClose) {
+    searchClose.addEventListener('click', closeSearch);
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function(e) {
+      const query = e.target.value.trim();
+      performSearch(query);
+    });
+  }
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', function(e) {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      openSearch();
+    }
+    if (e.key === 'Escape' && !searchOverlay.classList.contains('hidden')) {
+      closeSearch();
+    }
+  });
+
+  // Close on overlay click
+  if (searchOverlay) {
+    searchOverlay.addEventListener('click', function(e) {
+      if (e.target === searchOverlay) {
+        closeSearch();
+      }
+    });
+  }
+
+  // Initialize
+  showEmptyState();
+});
+</script>
+
+<style>
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Custom scrollbar for search results */
+  #search-results {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
+  }
+
+  #search-results::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #search-results::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  #search-results::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 3px;
+  }
+
+  #search-results::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text-muted);
+  }
+</style>
