@@ -1,30 +1,99 @@
 import { defineCollection, z } from 'astro:content';
 
-// GitHub repositories to fetch README content from
-const GITHUB_REPOS = [
-    'Xaxis/bitcoin-saves-humans-from-ai-redundancy',
-    'Xaxis/quantum-brains-disembodied-ai',
-    'Xaxis/how-bitcoin-quietly-defunds-the-fed',
-    'Xaxis/metrics-to-metal-physical-warp-drives',
-    'Xaxis/through-a-wormhole',
-    'Xaxis/btc-ar-post',
-    'Xaxis/detecting-the-graviton',
-    'Xaxis/uapwatch-cubesat',
-    'Xaxis/beyond-radio',
-    'Xaxis/bitcoin-proof-of-ownership',
-    'Xaxis/entangled-black-hole-network',
-    'Xaxis/ftl-signalling',
-    'Xaxis/wormhole-device',
-    'Xaxis/uap-ufo-honeypot-sensor-project',
-    'Xaxis/agentic-agi',
-    'Xaxis/photonic-foundations',
-    'Xaxis/ompsa',
-    'Xaxis/modelling-consciousness'
+// GitHub username and topic to search for
+const GITHUB_USERNAME = 'Xaxis';
+const BLOG_TOPIC = 'randoblog';
+
+// Fallback list in case API fails (your current repos)
+const FALLBACK_REPOS = [
+  'Xaxis/bitcoin-saves-humans-from-ai-redundancy',
+  'Xaxis/quantum-brains-disembodied-ai',
+  'Xaxis/how-bitcoin-quietly-defunds-the-fed',
+  'Xaxis/metrics-to-metal-physical-warp-drives',
+  'Xaxis/through-a-wormhole',
+  'Xaxis/btc-ar-post',
+  'Xaxis/detecting-the-graviton',
+  'Xaxis/uapwatch-cubesat',
+  'Xaxis/beyond-radio',
+  'Xaxis/bitcoin-proof-of-ownership',
+  'Xaxis/entangled-black-hole-network',
+  'Xaxis/ftl-signalling',
+  'Xaxis/wormhole-device',
+  'Xaxis/uap-ufo-honeypot-sensor-project',
+  'Xaxis/agentic-agi',
+  'Xaxis/photonic-foundations',
+  'Xaxis/ompsa',
+  'Xaxis/modelling-consciousness'
 ];
+
+// Function to fetch repositories tagged with the blog topic
+const fetchRandoblogRepos = async () => {
+  try {
+    console.log(`Fetching repositories tagged with "${BLOG_TOPIC}" from ${GITHUB_USERNAME}...`);
+
+    // Ensure we have a GitHub token for API calls
+    if (!process.env.GITHUB_TOKEN) {
+      console.warn('No GITHUB_TOKEN found in environment variables. Using fallback repo list.');
+      return FALLBACK_REPOS;
+    }
+
+    const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=created&direction=desc`, {
+      headers: {
+        'Accept': 'application/vnd.github.v3+json',
+        'User-Agent': 'randoblog/1.0',
+        'X-GitHub-Api-Version': '2022-11-28',
+        'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`
+      }
+    });
+
+    if (!response.ok) {
+      console.warn(`Failed to fetch repositories: ${response.status} ${response.statusText}. Using fallback repo list.`);
+      return FALLBACK_REPOS;
+    }
+
+    const repos = await response.json();
+
+    // Filter repositories that have the "randoblog" topic
+    const randoblogRepos = repos.filter((repo: any) =>
+      repo.topics && repo.topics.includes(BLOG_TOPIC)
+    );
+
+    if (randoblogRepos.length === 0) {
+      console.warn(`No repositories found with "${BLOG_TOPIC}" topic. Using fallback repo list.`);
+      return FALLBACK_REPOS;
+    }
+
+    // Sort by creation date (newest first) or by a custom date if available
+    randoblogRepos.sort((a: any, b: any) => {
+      const dateA = new Date(a.created_at);
+      const dateB = new Date(b.created_at);
+      return dateB.getTime() - dateA.getTime();
+    });
+
+    const repoList = randoblogRepos.map((repo: any) => `${GITHUB_USERNAME}/${repo.name}`);
+    console.log(`✓ Found ${repoList.length} repositories tagged with "${BLOG_TOPIC}":`, repoList);
+
+    return repoList;
+  } catch (error) {
+    console.error('Error fetching randoblog repositories:', error);
+    console.log('Using fallback repo list due to API error.');
+    return FALLBACK_REPOS;
+  }
+};
 
 // Custom loader to fetch README files from GitHub repositories
 const githubLoader = async () => {
   const entries = [];
+
+  // Fetch repositories dynamically
+  const GITHUB_REPOS = await fetchRandoblogRepos();
+
+  if (GITHUB_REPOS.length === 0) {
+    console.error('❌ No repositories found! This should not happen with fallback list.');
+    return [];
+  }
+
+  console.log(`📚 Processing ${GITHUB_REPOS.length} repositories for blog content...`);
 
   for (const repo of GITHUB_REPOS) {
     try {
@@ -252,7 +321,14 @@ const githubLoader = async () => {
     }
   }
 
-  console.log(`Loaded ${entries.length} entries from GitHub repositories`);
+  // Sort entries by publish date (newest first)
+  entries.sort((a, b) => {
+    const dateA = a.data.pubDate ? new Date(a.data.pubDate) : new Date(0);
+    const dateB = b.data.pubDate ? new Date(b.data.pubDate) : new Date(0);
+    return dateB.getTime() - dateA.getTime();
+  });
+
+  console.log(`Loaded ${entries.length} entries from GitHub repositories tagged with "${BLOG_TOPIC}"`);
   return entries;
 };
 
