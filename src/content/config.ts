@@ -6,6 +6,7 @@ const BLOG_TOPIC = 'randoblog';
 
 // Fallback list in case API fails (your current repos)
 const FALLBACK_REPOS = [
+  'Xaxis/an-open-console-that-could-actually-ship',
   'Xaxis/what-science-is-being-sat-on',
   'Xaxis/quantum-gravity-roadblocks-and-inroads',
   'Xaxis/dialing-up-speed-of-light',
