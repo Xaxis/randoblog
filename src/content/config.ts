@@ -124,7 +124,8 @@ const githubLoader = async () => {
         console.log(`Trying raw README fetch for ${repo}...`);
 
         const candidates = [
-          'README.md', 'Readme.md', 'readme.md', 'README.MD'
+          'README.md','Readme.md','readme.md','README.MD',
+          'README','readme','docs/README.md','Docs/README.md','docs/readme.md','index.md'
         ];
         const branches = ['main', 'master'];
         let rawContent: string | null = null;
@@ -226,7 +227,39 @@ const githubLoader = async () => {
           continue;
         }
 
-        console.warn(`Raw README fetch failed for ${repo}. Skipping.`);
+        console.warn(`Raw README fetch failed for ${repo}. Creating placeholder entry.`);
+        // As a last resort, create a minimal placeholder entry so production count stays accurate
+        let repoData: any = {};
+        try {
+          const repoResp = await fetch(`https://api.github.com/repos/${repo}`, {
+            headers: {
+              'Accept': 'application/vnd.github.v3+json',
+              'User-Agent': 'randoblog/1.0',
+              'X-GitHub-Api-Version': '2022-11-28',
+              ...(process.env.GITHUB_TOKEN && { 'Authorization': `Bearer ${process.env.GITHUB_TOKEN}` })
+            }
+          });
+          if (repoResp.ok) repoData = await repoResp.json();
+        } catch {}
+
+        const placeholder = {
+          id: repo.replace('/', '-').toLowerCase(),
+          body: `Content for ${repo} could not be loaded at build time. Visit the repository for details.`,
+          data: {
+            title: repoData.name || repo.split('/')[1] || repo,
+            description: repoData.description || `Content from ${repo}`,
+            pubDate: repoData.created_at ? new Date(repoData.created_at) : new Date(),
+            updatedDate: repoData.updated_at ? new Date(repoData.updated_at) : undefined,
+            heroImage: undefined,
+            tags: repoData.topics || [],
+            repository: repo,
+            repositoryUrl: repoData.html_url || `https://github.com/${repo}`,
+            draft: false,
+            missingContent: true
+          }
+        } as any;
+
+        entries.push(placeholder);
         continue;
       }
 
