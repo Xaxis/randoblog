@@ -6,6 +6,7 @@ const BLOG_TOPIC = 'randoblog';
 
 // Fallback list in case API fails (your current repos)
 const FALLBACK_REPOS = [
+  'Xaxis/bitcoin-nuclear-non-proliferation-plan',
   'Xaxis/bitcoin-when-energy-gets-weird-with-fusion',
   'Xaxis/bitcoin-ai-that-pays-its-own-bills',
   'Xaxis/bitcoin-hide-keys-in-plain-sight',
