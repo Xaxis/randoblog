@@ -49,9 +49,11 @@ const fetchRandoblogRepos = async () => {
       return FALLBACK_REPOS;
     }
 
-    const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=created&direction=desc`, {
+    // Use the Search API to reliably fetch repos with the topic
+    const searchUrl = `https://api.github.com/search/repositories?q=user:${GITHUB_USERNAME}+topic:${BLOG_TOPIC}&per_page=100&sort=updated&order=desc`;
+    const response = await fetch(searchUrl, {
       headers: {
-        'Accept': 'application/vnd.github.v3+json',
+        'Accept': 'application/vnd.github+json',
         'User-Agent': 'randoblog/1.0',
         'X-GitHub-Api-Version': '2022-11-28',
         'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`
@@ -59,30 +61,20 @@ const fetchRandoblogRepos = async () => {
     });
 
     if (!response.ok) {
-      console.warn(`Failed to fetch repositories: ${response.status} ${response.statusText}. Using fallback repo list.`);
+      console.warn(`Failed to search repositories: ${response.status} ${response.statusText}. Using fallback repo list.`);
       return FALLBACK_REPOS;
     }
 
-    const repos = await response.json();
+    const searchData = await response.json();
+    const items = Array.isArray(searchData.items) ? searchData.items : [];
 
-    // Filter repositories that have the "randoblog" topic
-    const randoblogRepos = repos.filter((repo: any) =>
-      repo.topics && repo.topics.includes(BLOG_TOPIC)
-    );
-
-    if (randoblogRepos.length === 0) {
+    if (items.length === 0) {
       console.warn(`No repositories found with "${BLOG_TOPIC}" topic. Using fallback repo list.`);
       return FALLBACK_REPOS;
     }
 
-    // Sort by creation date (newest first) or by a custom date if available
-    randoblogRepos.sort((a: any, b: any) => {
-      const dateA = new Date(a.created_at);
-      const dateB = new Date(b.created_at);
-      return dateB.getTime() - dateA.getTime();
-    });
-
-    const repoList = randoblogRepos.map((repo: any) => `${GITHUB_USERNAME}/${repo.name}`);
+    // Map to owner/name and ensure most-recent-first order
+    const repoList = items.map((repo: any) => `${repo.owner?.login || GITHUB_USERNAME}/${repo.name}`);
     console.log(`✓ Found ${repoList.length} repositories tagged with "${BLOG_TOPIC}":`, repoList);
 
     return repoList;
@@ -126,106 +118,115 @@ const githubLoader = async () => {
       });
 
       if (!response.ok) {
-        console.warn(`Failed to fetch ${repo}: ${response.status} ${response.statusText}`);
+        console.warn(`Failed to fetch ${repo} via API: ${response.status} ${response.statusText}`);
 
-        // Try alternative approach for public repos
-        if (response.status === 401) {
-          console.log(`Trying alternative fetch method for ${repo}...`);
+        // Try alternative raw fetch regardless of status (handles 401, 403, 404, etc.)
+        console.log(`Trying raw README fetch for ${repo}...`);
 
-          // Try fetching raw content directly (try main branch first, then master) with cache busting
-          let rawResponse = await fetch(`https://raw.githubusercontent.com/${repo}/main/README.md?t=${Date.now()}&v=4&r=${Math.random()}`);
-          if (!rawResponse.ok) {
-            rawResponse = await fetch(`https://raw.githubusercontent.com/${repo}/master/README.md?t=${Date.now()}&v=4&r=${Math.random()}`);
-          }
+        const candidates = [
+          'README.md', 'Readme.md', 'readme.md', 'README.MD'
+        ];
+        const branches = ['main', 'master'];
+        let rawContent: string | null = null;
 
-          if (rawResponse.ok) {
-            let content = await rawResponse.text();
-
-            // Clean up ANSI color codes that might interfere with rendering
-            content = content.replace(/\x1b\[[0-9;]*[mK]/g, '');
-
-            console.log(`✓ Fetched content from ${repo}`);
-
-            // Parse frontmatter if it exists
-            const frontmatterMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
-            let frontmatter = {} as any;
-            let body = content;
-
-            if (frontmatterMatch) {
-              try {
-
-                const yamlContent = frontmatterMatch[1];
-                const lines = yamlContent.split(/\r?\n/).filter(line => line.trim());
-
-                for (const line of lines) {
-                  const colonIndex = line.indexOf(':');
-                  if (colonIndex > 0) {
-                    const key = line.substring(0, colonIndex).trim();
-                    let value = line.substring(colonIndex + 1).trim();
-
-                    // Remove quotes if present
-                    if ((value.startsWith('"') && value.endsWith('"')) ||
-                        (value.startsWith("'") && value.endsWith("'"))) {
-                      value = value.slice(1, -1);
-                    }
-
-                    // Parse arrays
-                    if (value.startsWith('[') && value.endsWith(']')) {
-                      frontmatter[key] = value.slice(1, -1).split(',').map(s => s.trim().replace(/['"]/g, ''));
-                    }
-                    // Parse booleans
-                    else if (value === 'true' || value === 'false') {
-                      frontmatter[key] = value === 'true';
-                    }
-                    // Parse dates (specifically for pubDate and updatedDate)
-                    else if ((key === 'pubDate' || key === 'updatedDate') && !isNaN(Date.parse(value))) {
-                      frontmatter[key] = new Date(value);
-                    }
-                    // String values
-                    else {
-                      frontmatter[key] = value;
-                    }
-                  }
-                }
-                body = frontmatterMatch[2];
-
-              } catch (error) {
-                console.warn(`Failed to parse frontmatter for ${repo}:`, error);
+        for (const branch of branches) {
+          for (const file of candidates) {
+            const url = `https://raw.githubusercontent.com/${repo}/${branch}/${file}?t=${Date.now()}&v=4&r=${Math.random()}`;
+            try {
+              const rawResp = await fetch(url);
+              if (rawResp.ok) {
+                rawContent = await rawResp.text();
+                break;
               }
-            }
-
-            // Create entry with parsed frontmatter
-            const entryData = {
-              title: frontmatter.title || repo.split('/')[1] || repo,
-              description: frontmatter.description || `Content from ${repo}`,
-              pubDate: frontmatter.pubDate || new Date(),
-              updatedDate: frontmatter.updatedDate,
-              heroImage: frontmatter.heroImage,
-              tags: frontmatter.tags || [],
-              repository: repo,
-              repositoryUrl: `https://github.com/${repo}`,
-              draft: frontmatter.draft || false,
-              // Add any other frontmatter fields
-              ...Object.fromEntries(
-                Object.entries(frontmatter).filter(([key]) =>
-                  !['title', 'description', 'pubDate', 'updatedDate', 'heroImage', 'tags', 'draft'].includes(key)
-                )
-              )
-            };
-
-            const entry = {
-              id: repo.replace('/', '-').toLowerCase(),
-              body: body.trim(),
-              data: entryData
-            };
-
-            entries.push(entry);
-            continue;
-          } else {
-            console.warn(`Alternative fetch also failed for ${repo}: ${rawResponse.status}`);
+            } catch { /* ignore and try next */ }
           }
+          if (rawContent) break;
         }
 
+        if (rawContent) {
+          let content = rawContent;
+          // Clean up ANSI color codes that might interfere with rendering
+          content = content.replace(/\x1b\[[0-9;]*[mK]/g, '');
+
+          console.log(`✓ Fetched content (raw) from ${repo}`);
+
+          // Parse frontmatter if it exists
+          const frontmatterMatch = content.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+          let frontmatter = {} as any;
+          let body = content;
+
+          if (frontmatterMatch) {
+            try {
+              const yamlContent = frontmatterMatch[1];
+              const lines = yamlContent.split(/\r?\n/).filter(line => line.trim());
+
+              for (const line of lines) {
+                const colonIndex = line.indexOf(':');
+                if (colonIndex > 0) {
+                  const key = line.substring(0, colonIndex).trim();
+                  let value = line.substring(colonIndex + 1).trim();
+
+                  // Remove quotes if present
+                  if ((value.startsWith('"') && value.endsWith('"')) ||
+                      (value.startsWith("'") && value.endsWith("'"))) {
+                    value = value.slice(1, -1);
+                  }
+
+                  // Parse arrays
+                  if (value.startsWith('[') && value.endsWith(']')) {
+                    frontmatter[key] = value.slice(1, -1).split(',').map(s => s.trim().replace(/['"]/g, ''));
+                  }
+                  // Parse booleans
+                  else if (value === 'true' || value === 'false') {
+                    frontmatter[key] = value === 'true';
+                  }
+                  // Parse dates (specifically for pubDate and updatedDate)
+                  else if ((key === 'pubDate' || key === 'updatedDate') && !isNaN(Date.parse(value))) {
+                    frontmatter[key] = new Date(value);
+                  }
+                  // String values
+                  else {
+                    frontmatter[key] = value;
+                  }
+                }
+              }
+              body = frontmatterMatch[2];
+
+            } catch (error) {
+              console.warn(`Failed to parse frontmatter for ${repo}:`, error);
+            }
+          }
+
+          // Create entry with parsed frontmatter
+          const entryData = {
+            title: frontmatter.title || repo.split('/')[1] || repo,
+            description: frontmatter.description || `Content from ${repo}`,
+            pubDate: frontmatter.pubDate || new Date(),
+            updatedDate: frontmatter.updatedDate,
+            heroImage: frontmatter.heroImage,
+            tags: frontmatter.tags || [],
+            repository: repo,
+            repositoryUrl: `https://github.com/${repo}`,
+            draft: frontmatter.draft || false,
+            // Add any other frontmatter fields
+            ...Object.fromEntries(
+              Object.entries(frontmatter).filter(([key]) =>
+                !['title', 'description', 'pubDate', 'updatedDate', 'heroImage', 'tags', 'draft'].includes(key)
+              )
+            )
+          };
+
+          const entry = {
+            id: repo.replace('/', '-').toLowerCase(),
+            body: body.trim(),
+            data: entryData
+          };
+
+          entries.push(entry);
+          continue;
+        }
+
+        console.warn(`Raw README fetch failed for ${repo}. Skipping.`);
         continue;
       }
 
