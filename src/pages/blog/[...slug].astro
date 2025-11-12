@@ -54,14 +54,13 @@ marked.use(markedKatex({
 // Configure marked to generate IDs for headings
 marked.use({
   renderer: {
-    heading(text, level, raw) {
-      // Extract text content from marked token
-      const textContent = typeof text === 'string' ? text : text.text || text.raw || String(text);
-      // Clean ANSI codes from the display text as well
-      const cleanTextContent = textContent.replace(/\x1b\[[0-9;]*[mK]/g, '');
-      const headingLevel = level || 2; // Default to h2 if level is undefined
+    heading({ tokens, depth }) {
+      // Extract text content from tokens
+      const text = this.parser.parseInline(tokens);
+      // Clean ANSI codes from the display text
+      const cleanTextContent = text.replace(/\x1b\[[0-9;]*[mK]/g, '');
       const id = generateHeadingId(cleanTextContent);
-      return `<h${headingLevel} id="${id}">${cleanTextContent}</h${headingLevel}>`;
+      return `<h${depth} id="${id}">${cleanTextContent}</h${depth}>`;
     }
   }
 });
@@ -256,6 +255,8 @@ function formatDate(date: Date | string | undefined) {
 
   .prose-modern h2 {
     font-size: 1.875rem;
+    border-bottom: 2px solid var(--accent-primary);
+    padding-bottom: 0.5rem;
   }
 
   .prose-modern h3 {
@@ -352,10 +353,10 @@ function formatDate(date: Date | string | undefined) {
 
   .prose-modern hr {
     border: none;
-    height: 1px;
+    height: 2px;
     background: linear-gradient(to right, transparent, var(--accent-primary), transparent);
-    margin: 2rem 0;
-    opacity: 0.3;
+    margin: 3rem 0;
+    opacity: 0.6;
   }
 
 
