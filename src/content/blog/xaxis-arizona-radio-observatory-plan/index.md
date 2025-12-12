@@ -3,8 +3,8 @@ title: "Desert Ears: My Off-Grid DIY Radio Observatory in Southeast Arizona"
 description: "How I am turning a tiny, remote 1.25-acre plot in the Arizona desert into a solar-powered radio observatory with a hydrogen-line dish, HF and VHF/UHF antennas, Starlink backhaul, live webcams, and a buried micro-bunker for gear I can run and monitor from anywhere."
 pubDate: "2025-08-25"
 tags: ["radio astronomy", "amateur radio", "hydrogen line", "SDR", "off grid", "solar", "Arizona", "HF", "VHF", "UHF", "DIY"]
-repository: "Xaxis/arizona-radio-observatory-plan"
-repositoryUrl: "https://github.com/Xaxis/arizona-radio-observatory-plan"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-arizona-radio-observatory-plan/index.md"
 draft: false
 ---
 

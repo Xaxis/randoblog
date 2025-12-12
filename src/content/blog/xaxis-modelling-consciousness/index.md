@@ -3,8 +3,8 @@ title: "Modelling Consciousness"
 description: "A formal, substrate-agnostic framework for quantifying consciousness as an emergent property of interacting traits: information integration, adaptive self-referential processing, temporal continuity, and behavioral complexity. By modeling these as interdependent nodes in a dynamic system, the approach produces a relational measure that applies consistently across biological, artificial, and hybrid entities, enabling principled ethical decisions about conscious or near-conscious systems."
 pubDate: "2025-03-29"
 tags: ["consciousness", "cognitive science", "artificial intelligence", "ethics", "philosophy of mind", "information theory"]
-repository: "Xaxis/modelling-consciousness"
-repositoryUrl: "https://github.com/Xaxis/modelling-consciousness"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-modelling-consciousness/index.md"
 draft: false
 ---
 

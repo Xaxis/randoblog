@@ -3,8 +3,8 @@ title: "Detecting the Graviton: Scientific Consequences, Known Constraints, and 
 description: "A comprehensive research paper exploring the theoretical foundations, observational constraints, and experimental strategies for detecting the graviton. It outlines the scientific implications of graviton discovery, reviews current limits from gravitational-wave astronomy and quantum sensing, and proposes a novel superconducting-cavity experiment leveraging graviton–photon conversion."
 pubDate: "2025-08-18"
 tags: ["graviton", "quantum gravity", "gravitational waves", "particle physics", "effective field theory", "cosmology", "astrophysics", "quantum sensing", "high-frequency gravitational waves", "superconducting cavities", "quantum information", "fundamental physics", "theoretical physics", "AI in science", "experimental physics"]
-repository: "Xaxis/detecting-the-graviton"
-repositoryUrl: "https://github.com/Xaxis/detecting-the-graviton"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-detecting-the-graviton/index.md"
 draft: false
 ---
 

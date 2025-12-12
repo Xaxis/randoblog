@@ -3,8 +3,8 @@ title: "mNAV, premiums, and the real playbook for Bitcoin treasury companies"
 description: "A clear, straight-talking explainer on mNAV, why premiums exist, why they collapse, and how operators and investors should actually use the ratio without getting fooled by their own charts."
 pubDate: "2025-09-19"
 tags: ["Bitcoin", "treasury", "mNAV", "valuation", "capital markets"]
-repository: "Xaxis/mvnav-and-bitcoin-treasury-companies"
-repositoryUrl: "https://github.com/Xaxis/mvnav-and-bitcoin-treasury-companies"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-mvnav-and-bitcoin-treasury-companies/index.md"
 draft: false
 ---
 

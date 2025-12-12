@@ -3,8 +3,8 @@ title: "Wintering Well: How to Cross the Fourth Turning Without Losing Your Head
 description: "A practical philosophy for the next 3 to 7 years: what the crisis actually is, how to stand upright inside it, and why the far side can be better than the place we left."
 pubDate: "2025-09-26"
 tags: ["Fourth Turning", "resilience", "philosophy", "Bitcoin", "AI", "civic-repair"]
-repository: "Xaxis/wintering-well-how-to-cross-fourth-turning"
-repositoryUrl: "https://github.com/Xaxis/wintering-well-how-to-cross-fourth-turning"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-wintering-well-how-to-cross-fourth-turning/index.md"
 draft: false
 ---
 

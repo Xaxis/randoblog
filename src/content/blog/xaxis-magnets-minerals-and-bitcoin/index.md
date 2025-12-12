@@ -3,8 +3,8 @@ title: "Magnets, Minerals, and Bitcoin: A Real Plan to Blunt China's Rare Earth 
 description: "China controls the refining and magnet chokepoints. Here is a U.S. playbook that actually works, with an asteroid mining reality check and a Bitcoin-native incentive layer to make the economics pencil."
 pubDate: "2025-09-16"
 tags: ["geopolitics", "rare earths", "supply chains", "Bitcoin", "energy", "industrial policy", "asteroid mining"]
-repository: "Xaxis/magnets-minerals-and-bitcoin"
-repositoryUrl: "https://github.com/Xaxis/magnets-minerals-and-bitcoin"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-magnets-minerals-and-bitcoin/index.md"
 draft: false
 ---
 

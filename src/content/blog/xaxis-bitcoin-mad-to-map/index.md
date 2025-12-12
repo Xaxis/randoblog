@@ -3,8 +3,8 @@ title: "From MAD to MAP: Bitcoin as the Credibility Layer for Peace"
 description: "If not mutually assured destruction, then what? A practical incentive design that swaps fear for proofs and replaces fragile promises with collateral that bleeds on breach."
 pubDate: "2025-09-16"
 tags: ["bitcoin", "geopolitics", "game theory", "nonproliferation", "crypto"]
-repository: "Xaxis/bitcoin-mad-to-map"
-repositoryUrl: "https://github.com/Xaxis/bitcoin-mad-to-map"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-bitcoin-mad-to-map/index.md"
 draft: false
 ---
 

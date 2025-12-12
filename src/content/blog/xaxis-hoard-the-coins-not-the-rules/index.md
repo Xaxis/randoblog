@@ -3,8 +3,8 @@ title: "You Can Hoard the Coins, Not the Rules"
 description: "The answer to the concentration fear: why Bitcoin still helps regular people even if a few giants hold a lot of it."
 pubDate: "2025-11-03"
 tags: ["bitcoin", "game theory", "decentralization", "savings"]
-repository: "Xaxis/hoard-the-coins-not-the-rules"
-repositoryUrl: "https://github.com/Xaxis/hoard-the-coins-not-the-rules"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-hoard-the-coins-not-the-rules/index.md"
 draft: false
 ---
 

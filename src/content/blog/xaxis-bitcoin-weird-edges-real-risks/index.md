@@ -3,8 +3,8 @@ title: "Weird Edges, Real Risks: Field Notes from a Bitcoin Lifer"
 description: "A casual walk through the soft spots around Bitcoin security, written like a human who cares about radios, ropes, and reproducible builds."
 pubDate: "2025-10-07"
 tags: ["Bitcoin", "security", "privacy", "Lightning", "ham radio", "defense"]
-repository: "Xaxis/bitcoin-weird-edges-real-risks"
-repositoryUrl: "https://github.com/Xaxis/bitcoin-weird-edges-real-risks"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-bitcoin-weird-edges-real-risks/index.md"
 draft: false
 ---
 

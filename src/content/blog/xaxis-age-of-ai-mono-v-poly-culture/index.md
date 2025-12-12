@@ -3,8 +3,8 @@ title: "Monoculture vs. Polyculture in the Age of AI"
 description: "AI is pulling us in two directions at once: toward sameness and toward explosion. Here is why the backlash is inevitable, where the silver linings are, and how to resist capture without lighting the world on fire."
 pubDate: "2025-09-26"
 tags: ["AI", "culture", "decentralization", "authenticity", "protocols"]
-repository: "Xaxis/age-of-ai-mono-v-poly-culture"
-repositoryUrl: "https://github.com/Xaxis/age-of-ai-mono-v-poly-culture"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-age-of-ai-mono-v-poly-culture/index.md"
 draft: false
 ---
 

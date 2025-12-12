@@ -3,8 +3,8 @@ title: "OrangeCheck: A Simple Bitcoin Reputation You Can Verify Yourself"
 description: "I just launched the OrangeCheck beta. It is a minimal, Bitcoin-first proof of skin in the game that you can verify locally. The initial badge is only the doorway. The real journey is an open protocol for auth, credit, and identity mechanics, plus a hosted verifier API, shareable badge embeds, and a Nostr overlay where a community can pressure test the idea."
 pubDate: "2025-10-02"
 tags: ["Bitcoin", "OrangeCheck", "reputation", "BIP-322", "Nostr"]
-repository: "Xaxis/orangecheck-bitcoin-reputation-introduction"
-repositoryUrl: "https://github.com/Xaxis/orangecheck-bitcoin-reputation-introduction"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-orangecheck-bitcoin-reputation-introduction/index.md"
 draft: false
 ---
 

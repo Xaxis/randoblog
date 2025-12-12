@@ -3,8 +3,8 @@ title: "Basement Hash, Warm Apartment: A Forced-Air First Build for a Juneau 5-p
 description: "A complete, practical plan to launch a small Bitcoin mine that heats a basement apartment with ducted forced air, routes excess to the roof, and uses smart controls to keep everyone comfortable while you cover the power bill."
 pubDate: "2025-10-09"
 tags: ["bitcoin mining", "home mining", "forced air", "heat reuse", "Juneau", "HVAC", "ROI"]
-repository: "Xaxis/basement-bitcoin-hash-plan"
-repositoryUrl: "https://github.com/Xaxis/basement-bitcoin-hash-plan"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-basement-bitcoin-hash-plan/index.md"
 draft: false
 ---
 

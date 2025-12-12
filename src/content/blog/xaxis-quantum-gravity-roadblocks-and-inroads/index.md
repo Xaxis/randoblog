@@ -3,8 +3,8 @@ title: "Quantum Gravity: Roadblocks, Inroads, and the Slow Grind Toward Proof"
 description: "What actually makes quantum gravity so hard, where the math and experiments are finally giving traction, and the concrete milestones that would count as real progress toward a provable solution."
 pubDate: "2025-08-31"
 tags: ["physics", "quantum gravity", "general relativity", "holography", "string theory", "loop quantum gravity", "EFT", "black holes"]
-repository: "Xaxis/quantum-gravity-roadblocks-and-inroads"
-repositoryUrl: "https://github.com/Xaxis/quantum-gravity-roadblocks-and-inroads"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-quantum-gravity-roadblocks-and-inroads/index.md"
 draft: false
 ---
 

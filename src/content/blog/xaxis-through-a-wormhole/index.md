@@ -3,8 +3,8 @@ title: "Through a Wormhole: What Travel Would Really Look and Feel Like"
 description: "An in-depth, non-mathematical exploration of what traversable wormholes would actually look like from the outside, what the experience of entering and crossing the throat would feel like, and how long such a transit would last. Blending physics with imagination, this article paints a vivid picture of the visuals, sensations, and time mechanics of wormhole travel, grounded in general relativity while acknowledging the exotic matter challenge."
 pubDate: "2025-08-19"
 tags: ["wormholes", "general relativity", "spacetime", "traversable wormholes", "cosmology", "astrophysics", "time travel", "exotic matter", "Kip Thorne", "Carl Sagan", "Contact", "gravitational lensing", "physics", "science writing", "space exploration"]
-repository: "Xaxis/through-a-wormhole"
-repositoryUrl: "https://github.com/Xaxis/through-a-wormhole"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-through-a-wormhole/index.md"
 draft: false
 ---
 

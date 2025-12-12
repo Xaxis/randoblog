@@ -3,8 +3,8 @@ title: "Lasers as the Hidden Engines of Sci-Fi Tech"
 description: "This paper explores how photonic manipulation—the precise control of matter using lasers and structured light—can serve as the foundation for technologies long imagined in science fiction, including force fields, tractor beams, cloaking systems, and reconfigurable matter. Building on principles like optical trapping and momentum transfer, it describes how programmable light lattices could form adaptive shields, enable remote object manipulation, create dynamic invisibility cloaks, and shape materials in real time. The discussion covers engineering challenges such as heat management, particle stability, and computational demands, alongside proposed solutions integrating adaptive optics, AI-driven control, and sensor fusion. Potential applications span space defense, contactless assembly, stealth infrastructure, and biomedical systems, framing photonics as a core enabler of flexible, intelligent environments."
 pubDate: "2025-03-31"
 tags: ["photonic manipulation", "lasers", "optical trapping", "force fields", "tractor beams", "cloaking", "reconfigurable matter"]
-repository: "Xaxis/photonic-foundations"
-repositoryUrl: "https://github.com/Xaxis/photonic-foundations"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-photonic-foundations/index.md"
 draft: false
 ---
 

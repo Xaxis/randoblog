@@ -3,8 +3,8 @@ title: "Proof Over Identity: A case for LOCK Protocol"
 description: "Speaking to the why and the future of a proof-first messenger built on Bram Kanstein’s LOCK protocol, what it changes for Bitcoiners, where it is tough, and why it might matter if we build it with care."
 pubDate: "2025-10-06"
 tags: ["Bitcoin", "privacy", "self-sovereignty", "LOCK", "protocols", "messaging"]
-repository: "Xaxis/proof-over-identity-bitcoiners-case-for-lock"
-repositoryUrl: "https://github.com/Xaxis/proof-over-identity-bitcoiners-case-for-lock"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-proof-over-identity-bitcoiners-case-for-lock/index.md"
 draft: false
 ---
 

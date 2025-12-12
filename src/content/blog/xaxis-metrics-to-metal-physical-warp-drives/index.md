@@ -3,8 +3,8 @@ title: "From Metrics to Metal: A Practical Path Toward Physical Warp Drives"
 description: "A no-nonsense tour of what the 2021 Bobrick–Martire paper actually claims, the real constraints hidden in the stress–energy bookkeeping, and a staged engineering plan—from table-top demonstrations to field-shaping prototypes—for turning a mathematical warp shell into something we can measure, iterate, and eventually fly."
 pubDate: "2025-08-20"
 tags: ["warp drive", "general relativity", "spacetime engineering", "energy conditions", "negative energy", "quantum inequalities", "Alcubierre", "analog gravity", "atom interferometry"]
-repository: "Xaxis/metrics-to-metal-physical-warp-drives"
-repositoryUrl: "https://github.com/Xaxis/metrics-to-metal-physical-warp-drives"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-metrics-to-metal-physical-warp-drives/index.md"
 draft: false
 ---
 

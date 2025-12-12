@@ -3,8 +3,8 @@ title: "Hodl or Home: Navigating the Tradeoffs Between Bitcoin, Renting, and Buy
 description: "A long-form exploration of how Bitcoiners wrestle with the dilemma of hodling versus buying a home, the future of Bitcoin-collateralized lending, and what freedom of time really means when weighing renting against ownership."
 pubDate: "2025-08-27"
 tags: ["bitcoin", "housing", "personal finance", "hodl", "collateralized lending"]
-repository: "Xaxis/bitcoin-and-home-buying-strategy"
-repositoryUrl: "https://github.com/Xaxis/bitcoin-and-home-buying-strategy"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-bitcoin-and-home-buying-strategy/index.md"
 draft: false
 ---
 

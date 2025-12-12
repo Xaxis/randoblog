@@ -3,8 +3,8 @@ title: "How to Talk to Something Smarter: A Practical Translator for Minds That 
 description: "Treating superintelligence like an interface problem, not a theology problem. How to ground, elicit, and verify signals across a real cognitive gap."
 pubDate: "2025-10-09"
 tags: ["AI", "superintelligence", "communication", "ontology", "symbol grounding"]
-repository: "Xaxis/how-to-talk-to-something-smarter"
-repositoryUrl: "https://github.com/Xaxis/how-to-talk-to-something-smarter"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-how-to-talk-to-something-smarter/index.md"
 draft: false
 ---
 

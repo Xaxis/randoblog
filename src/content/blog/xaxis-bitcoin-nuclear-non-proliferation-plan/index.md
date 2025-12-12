@@ -3,8 +3,8 @@ title: "Make Cheating Expensive: Bitcoin Inside a Nuclear Non-Proliferation Stac
 description: "A concrete, buildable design for nuclear non-proliferation that uses Bitcoin: immutable time, auditable custody, and skin-in-the-game incentives."
 pubDate: "2025-09-16"
 tags: ["bitcoin", "security", "nonproliferation", "verification", "zero-knowledge", "lightning", "dlc", "taproot"]
-repository: "Xaxis/bitcoin-nuclear-non-proliferation-plan"
-repositoryUrl: "https://github.com/Xaxis/bitcoin-nuclear-non-proliferation-plan"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-bitcoin-nuclear-non-proliferation-plan/index.md"
 draft: false
 ---
 

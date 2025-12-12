@@ -3,8 +3,8 @@ title: "Hide Bitcoin Keys in Plain Sight: DIY multisig with RF sentinels and rea
 description: "A practical, buildable plan for a self-custodial multisig that uses hidden geo-wallet sentinels to whisper encrypted status over unlicensed RF, warn on tamper, and keep you in control without putting signing keys online."
 pubDate: "2025-09-01"
 tags: ["bitcoin", "self custody", "multisig", "hardware", "RF", "privacy", "DIY"]
-repository: "Xaxis/bitcoin-hide-keys-in-plain-sight"
-repositoryUrl: "https://github.com/Xaxis/bitcoin-hide-keys-in-plain-sight"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-bitcoin-hide-keys-in-plain-sight/index.md"
 draft: false
 ---
 

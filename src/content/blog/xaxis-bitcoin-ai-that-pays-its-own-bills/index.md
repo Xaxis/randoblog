@@ -3,8 +3,8 @@ title: "AI That Pays Its Own Bills, Bitcoin That Knows What It’s Doing"
 description: "A builder’s look at the near term and long term overlap between AI agents and Bitcoin: what works right now, what will unlock next, and how to wire it together without hand-wavy nonsense."
 pubDate: "2025-09-01"
 tags: ["ai", "bitcoin", "agents", "lightning", "nostr", "energy"]
-repository: "Xaxis/bitcoin-ai-that-pays-its-own-bills"
-repositoryUrl: "https://github.com/Xaxis/bitcoin-ai-that-pays-its-own-bills"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-bitcoin-ai-that-pays-its-own-bills/index.md"
 draft: false
 ---
 

@@ -3,8 +3,8 @@ title: "Bitcoin vs Quantum: What Actually Breaks, What Doesn’t, and What We Sh
 description: "A practical walk through the quantum computer risk to Bitcoin, why signatures are the only real attack surface, and how we migrate with calm engineering instead of panic."
 pubDate: "2025-11-12"
 tags: ["bitcoin", "security", "cryptography", "quantum", "engineering"]
-repository: "Xaxis/bitcoin-quantum-expose"
-repositoryUrl: "https://github.com/Xaxis/bitcoin-quantum-expose"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-bitcoin-quantum-expose/index.md"
 draft: false
 ---
 

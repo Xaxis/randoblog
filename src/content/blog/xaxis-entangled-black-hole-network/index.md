@@ -3,8 +3,8 @@ title: "The Entangled Black-Hole Network and the Emergent Geometry of the Univer
 description: "A theoretical framework in which all astrophysical black holes form a cosmic entanglement graph whose connectivity sources spacetime curvature. By promoting entanglement entropy to a stress–energy term in modified Einstein equations, the Entangled Black-Hole Network explains late-time cosmic acceleration without fine tuning, accounts for rapid early SMBH growth, and predicts observable signatures in gravitational waves, horizon-scale polarization, and CMB anisotropies."
 pubDate: "2025-08-07"
 tags: ["cosmology", "astrophysics", "black holes", "entanglement", "ER=EPR", "quantum gravity"]
-repository: "Xaxis/entangled-black-hole-network"
-repositoryUrl: "https://github.com/Xaxis/entangled-black-hole-network"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-entangled-black-hole-network/index.md"
 draft: false
 ---
 

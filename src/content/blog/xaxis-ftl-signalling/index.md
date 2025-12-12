@@ -3,8 +3,8 @@ title: "Amplifying Quantum Non-Linearity with Rydberg Slow-Light"
 description: "A tabletop experimental proposal to probe tiny nonlinear corrections to quantum mechanics using Rydberg slow-light as a massive amplifier. By storing single entangled photons in an EIT-enhanced Rydberg medium, the setup magnifies any Weinberg-type non-linearity by orders of magnitude, enabling a decisive, space-like–separated test of whether such effects permit faster-than-light signalling. A null result would set world-leading bounds; a positive result would upend one of physics’ most entrenched limits."
 pubDate: "2025-08-05"
 tags: ["ftl", "quantum mechanics", "non-linearity", "rydberg atoms", "slow-light", "quantum foundations", "entanglement"]
-repository: "Xaxis/ftl-signalling"
-repositoryUrl: "https://github.com/Xaxis/ftl-signalling"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-ftl-signalling/index.md"
 draft: false
 ---
 

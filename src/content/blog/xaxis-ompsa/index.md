@@ -3,8 +3,8 @@ title: "Optical Micro-Particle Shield Array (OMPSA) for Advanced Spacecraft Prot
 description: "This paper introduces the Optical Micro-Particle Shield Array (OMPSA), a proposed spacecraft defense system that uses holographic optical trapping to suspend and control a cloud of dielectric microparticles around a vessel. The dynamic shell is designed to fragment incoming debris and scatter or reflect harmful radiation, with particle types tailored for specific hazards and replenished from onboard stores as needed. AI-driven spatial light modulators maintain and reconfigure thousands of optical traps in real time, enabling self-healing after impacts and adaptive responses to changing conditions. The concept addresses ballistic and electromagnetic threats while aiming to reduce mass compared to traditional shielding, though challenges remain in thermal management, electrostatic control, and computational load. Potential applications range from orbital stations and satellite constellations to deep-space missions, where active, reconfigurable protection could greatly extend operational lifetimes."
 pubDate: "2025-03-29"
 tags: ["OMPSA", "spacecraft shielding", "optical trapping", "microparticles", "ballistic protection", "radiation mitigation", "adaptive defense"]
-repository: "Xaxis/ompsa"
-repositoryUrl: "https://github.com/Xaxis/ompsa"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-ompsa/index.md"
 draft: false
 ---
 

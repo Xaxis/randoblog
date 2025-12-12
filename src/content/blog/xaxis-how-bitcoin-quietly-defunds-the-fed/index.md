@@ -3,8 +3,8 @@ title: "How Bitcoin Quietly Defunds the Fed"
 description: "An in-depth exploration of how Bitcoin erodes the Federal Reserve’s seigniorage base, shrinks its profit remittances to the Treasury, and weakens policy transmission—not through politics, but through currency competition, savings migration, and settlement on Bitcoin-native rails."
 pubDate: "2025-08-21"
 tags: ["Bitcoin", "Federal Reserve", "seigniorage", "monetary policy", "hyperbitcoinization", "currency competition", "Lightning Network", "store of value", "sound money", "dollar collapse"]
-repository: "Xaxis/how-bitcoin-quietly-defunds-the-fed"
-repositoryUrl: "https://github.com/Xaxis/how-bitcoin-quietly-defunds-the-fed"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-how-bitcoin-quietly-defunds-the-fed/index.md"
 draft: false
 ---
 

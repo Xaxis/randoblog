@@ -3,8 +3,8 @@ title: "A Lightning Flywheel You Can Actually Run"
 description: "How an individual sets up a Lightning node that earns real yield from routing, liquidity leases, and service fees, then compounds it into a self reinforcing engine."
 pubDate: "2025-09-18"
 tags: ["Bitcoin", "Lightning", "yield", "routing", "infrastructure"]
-repository: "Xaxis/a-lightning-flywheel-you-can-actually-run"
-repositoryUrl: "https://github.com/Xaxis/a-lightning-flywheel-you-can-actually-run"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-a-lightning-flywheel-you-can-actually-run/index.md"
 draft: false
 ---
 

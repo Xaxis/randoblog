@@ -3,8 +3,8 @@ title: "When AI Makes Half of Us Redundant: What Breaks, What Survives, and Why 
 description: "A clear-eyed map of a world where AI drives 30–50% unemployment: the deflationary mechanics that strain capitalism, the policy toolkit we’re likely to see (UBI, financial repression, CBDCs/stablecoins), and the narrow but real ways Bitcoin can protect individuals’ savings and settlement rights."
 pubDate: "2025-08-21"
 tags: ["AI", "automation", "deflation", "unemployment", "capitalism", "UBI", "financial repression", "CBDCs", "stablecoins", "Bitcoin", "macro", "future of work"]
-repository: "Xaxis/bitcoin-saves-humans-from-ai-redundancy"
-repositoryUrl: "https://github.com/Xaxis/bitcoin-saves-humans-from-ai-redundancy"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-bitcoin-saves-humans-from-ai-redundancy/index.md"
 draft: false
 ---
 

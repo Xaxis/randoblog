@@ -3,8 +3,8 @@ title: "Fossil Curvature: When Space Keeps the Shape of Things That Are Gone"
 description: "A testable hypothesis for why parts of the universe act like there is extra mass or extra push even when nothing obvious is there."
 pubDate: "2025-09-16"
 tags: ["cosmology", "dark matter", "dark energy", "general relativity", "lensing", "theory"]
-repository: "Xaxis/spacetime-fossil-curvatures"
-repositoryUrl: "https://github.com/Xaxis/spacetime-fossil-curvatures"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-spacetime-fossil-curvatures/index.md"
 draft: false
 ---
 

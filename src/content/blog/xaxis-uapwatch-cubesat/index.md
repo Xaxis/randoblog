@@ -3,8 +3,8 @@ title: "UAPWatch: A Multisensor CubeSat Constellation for Anomalous Object Detec
 description: "A comprehensive open-science mission concept for detecting and characterizing unidentified anomalous phenomena in near-Earth space using a coordinated CubeSat constellation with optical, thermal, and radio sensing."
 pubDate: "2025-08-15"
 tags: ["UAP", "CubeSat", "small satellites", "space situational awareness", "multisensor fusion", "space exploration", "remote sensing", "optical tracking", "infrared astronomy", "radio astronomy", "AI in science", "open data", "space technology"]
-repository: "Xaxis/uapwatch-cubesat"
-repositoryUrl: "https://github.com/Xaxis/uapwatch-cubesat"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-uapwatch-cubesat/index.md"
 draft: false
 ---
 

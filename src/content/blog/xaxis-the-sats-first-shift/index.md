@@ -3,8 +3,8 @@ title: "The Sats First Shift: Fixing Unit Bias Without Touching Consensus"
 description: "Why denominating in sats solves the psychology problem, improves UX, and nudges adoption, all without changing Bitcoin's base rules."
 pubDate: "2025-09-19"
 tags: ["Bitcoin", "sats", "unit bias", "Lightning", "UX", "product"]
-repository: "Xaxis/the-sats-first-shift"
-repositoryUrl: "https://github.com/Xaxis/the-sats-first-shift"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-the-sats-first-shift/index.md"
 draft: false
 ---
 

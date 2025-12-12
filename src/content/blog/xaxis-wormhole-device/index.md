@@ -3,8 +3,8 @@ title: "The EEH-Casimir Wormhole Device"
 description: "This document outlines a speculative, engineering-style blueprint for a traversable wormhole and time machine based on Einstein–Euler–Heisenberg gravity. Translating recent theoretical results into an integrated systems narrative, it describes how extreme electromagnetic fields near the Schwinger limit, combined with a dynamically driven Casimir negative-energy shell, could meet the energy-condition requirements for a 10 m throat. The design includes gigatesla pulsed magnets, petawatt laser arrays, a gravitomagnetic plasma ring for stability, and a relativistic mouth-transport module to achieve time offsets. While every subsystem exceeds current capabilities, the proposal serves as a thought experiment to pinpoint technological barriers, suggest phased prototyping, and explore the operational sequencing of such a device."
 pubDate: "2025-06-22"
 tags: ["wormholes", "time travel", "Einstein–Euler–Heisenberg", "Casimir effect", "negative energy", "strong-field physics", "speculative engineering"]
-repository: "Xaxis/wormhole-device"
-repositoryUrl: "https://github.com/Xaxis/wormhole-device"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-wormhole-device/index.md"
 draft: false
 ---
 

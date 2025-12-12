@@ -3,8 +3,8 @@ title: "Quantum Brains, Robot Bodies, and the Real Path to Disembodied AI"
 description: "A deep dive into whether large language models can ever run effectively on quantum computers, why the real barriers are data movement and error correction, and how embodied intelligence will actually emerge from a layered, distributed architecture of reflexive on-robot models, edge cognition, and cloud or quantum sidecars. It maps the realistic path to 'disembodied AI'—robots with safe, scalable minds that respect physics and timing constraints."
 pubDate: "2025-08-21"
 tags: ["quantum computing", "large language models", "robotics", "AGI", "disembodied AI", "state-space models", "mixture-of-experts", "edge AI", "neuromorphic hardware", "photonic compute"]
-repository: "Xaxis/quantum-brains-disembodied-ai"
-repositoryUrl: "https://github.com/Xaxis/quantum-brains-disembodied-ai"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-quantum-brains-disembodied-ai/index.md"
 draft: false
 ---
 

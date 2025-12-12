@@ -3,8 +3,8 @@ title: "Beyond Radio: A Next-Generation Strategy for Detecting Extraterrestrial 
 description: "A research-driven proposal for a multi-modal, technosignature-focused approach to SETI that moves beyond traditional radio searches, integrating infrared surveys, transit anomaly detection, atmospheric spectroscopy, and AI-powered cross-modal analysis."
 pubDate: "2025-08-14"
 tags: ["SETI", "technosignatures", "astronomy", "alien life", "infrared astronomy", "astrobiology", "AI in science", "Boyajians Star", "space exploration", "data science"]
-repository: "Xaxis/beyond-radio"
-repositoryUrl: "https://github.com/Xaxis/beyond-radio"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-beyond-radio/index.md"
 draft: false
 ---
 

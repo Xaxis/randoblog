@@ -3,8 +3,8 @@ title: "Why 'Deficits Are Private Surpluses' Misses the Point"
 description: "A critique of MMT’s sectoral-balance mantra, and why a hard-cap money like Bitcoin changes the calculus."
 pubDate: "2025-11-03"
 tags: ["MMT", "Bitcoin", "macro", "inflation", "fiscal policy"]
-repository: "Xaxis/deficits-are-not-private-surplus"
-repositoryUrl: "https://github.com/Xaxis/deficits-are-not-private-surplus"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-deficits-are-not-private-surplus/index.md"
 draft: false
 ---
 

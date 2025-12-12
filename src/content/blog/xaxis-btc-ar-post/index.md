@@ -3,8 +3,8 @@ title: "Why I Built BTC AR: Pricing the World in Bitcoin"
 description: "A personal essay on creating BTC AR, a simple client-side app that lets you point your camera at prices and instantly see their value in Bitcoin. It explores the motivation behind the project, the philosophy of pricing life in sats, and how reframing everyday costs through Bitcoin shifts perspective on money, value, and sovereignty."
 pubDate: "2025-08-18"
 tags: ["Bitcoin", "BTC AR", "sats", "unit of account", "sound money", "fiat", "decentralization", "cryptocurrency", "personal finance", "Augmented Reality", "SPA apps", "financial sovereignty", "open source", "client side apps", "btc"]
-repository: "Xaxis/btc-ar-post"
-repositoryUrl: "https://github.com/Xaxis/btc-ar-post"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-btc-ar-post/index.md"
 draft: false
 ---
 

@@ -3,8 +3,8 @@ title: "When energy gets weird: Bitcoin in a world where fusion actually works"
 description: "A builder’s take on what happens to Bitcoin’s economics, security budget, and mining geography if fusion ramps from demos to real power plants."
 pubDate: "2025-09-08"
 tags: ["bitcoin", "fusion", "energy", "mining", "economics"]
-repository: "Xaxis/bitcoin-when-energy-gets-weird-with-fusion"
-repositoryUrl: "https://github.com/Xaxis/bitcoin-when-energy-gets-weird-with-fusion"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-bitcoin-when-energy-gets-weird-with-fusion/index.md"
 draft: false
 ---
 

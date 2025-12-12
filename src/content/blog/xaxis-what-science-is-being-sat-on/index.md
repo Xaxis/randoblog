@@ -3,8 +3,8 @@ title: "What Science Is Being Sat On"
 description: "A grounded, technical look at the kinds of physics and science most likely trapped behind US classification walls, why that happens, and how we can responsibly surface the truth."
 pubDate: "2025-08-31"
 tags: ["secrecy", "physics", "national security", "quantum sensing", "directed energy", "cryptography"]
-repository: "Xaxis/what-science-is-being-sat-on"
-repositoryUrl: "https://github.com/Xaxis/what-science-is-being-sat-on"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-what-science-is-being-sat-on/index.md"
 draft: false
 ---
 

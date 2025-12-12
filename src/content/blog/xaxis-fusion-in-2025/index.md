@@ -3,8 +3,8 @@ title: "Fusion In 2025: Who’s Close, What’s Real, And When The U.S. Actually
 description: "A plain-spoken tour of global fusion progress and a sober read on when it turns into real electricity in the United States."
 pubDate: "2025-09-01"
 tags: ["fusion", "energy", "policy", "grid", "R&D"]
-repository: "Xaxis/fusion-in-2025"
-repositoryUrl: "https://github.com/Xaxis/fusion-in-2025"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-fusion-in-2025/index.md"
 draft: false
 ---
 

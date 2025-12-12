@@ -3,8 +3,8 @@ title: "Dialing Up C: A Pragmatic Look at Warp Energy, Speeds, and How Far We Co
 description: "In plain language: what a warp bubble really buys you, how the energy scales as you dial up multiples of c, and what that means for crossing real cosmic distances on real timelines."
 pubDate: "2025-08-30"
 tags: ["physics", "warp drive", "FTL", "space travel", "faster than light", "general relativity", "cosmology", "spacetime", "energy", "Alcubierre drive", "interstellar travel", "theoretical physics"]
-repository: "Xaxis/dialing-up-speed-of-light"
-repositoryUrl: "https://github.com/Xaxis/dialing-up-speed-of-light"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-dialing-up-speed-of-light/index.md"
 draft: false
 ---
 

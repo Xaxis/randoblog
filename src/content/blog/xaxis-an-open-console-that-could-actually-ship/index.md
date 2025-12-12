@@ -3,8 +3,8 @@ title: "An Open Console That Could Actually Ship"
 description: "I went looking for truly open gaming platforms, what we can learn from the near misses, and a practical blueprint for building one people will actually use."
 pubDate: "2025-09-01"
 tags: ["open-source", "gaming", "hardware", "Linux", "Mesa", "Godot", "retrogaming", "community"]
-repository: "Xaxis/an-open-console-that-could-actually-ship"
-repositoryUrl: "https://github.com/Xaxis/an-open-console-that-could-actually-ship"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-an-open-console-that-could-actually-ship/index.md"
 draft: false
 ---
 

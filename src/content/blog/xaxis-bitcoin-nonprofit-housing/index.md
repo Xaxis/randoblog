@@ -3,8 +3,8 @@ title: "Bitcoin Nonprofit Housing: Turning a 5-Unit Juneau Building Into a Trans
 description: "A practical blueprint for converting a small Juneau rental into a Bitcoin-powered nonprofit that stabilizes rent, shares upside with tenants, and funds repairs from an on-chain reserve. This is about feasibility, incentives, and why it works in the real world."
 pubDate: "2025-08-22"
 tags: ["Bitcoin", "housing", "nonprofit", "Juneau", "real estate", "Lightning", "proof of reserves", "community"]
-repository: "Xaxis/bitcoin-nonprofit-housing"
-repositoryUrl: "https://github.com/Xaxis/bitcoin-nonprofit-housing"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-bitcoin-nonprofit-housing/index.md"
 draft: false
 ---
 

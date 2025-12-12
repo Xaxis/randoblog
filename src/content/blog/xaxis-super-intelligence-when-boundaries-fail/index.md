@@ -3,8 +3,8 @@ title: "When the Boundary Fails: How a Real Superintelligence Merges Flesh and C
 description: "Not sci-fi. A concrete path to substrate indistinguishability using protein design, viral logistics, glial buses, and a pericranial sheath. Dark, technical, and grounded."
 pubDate: "2025-10-09"
 tags: ["superintelligence", "biotech", "control theory", "BCI", "governance"]
-repository: "Xaxis/super-intelligence-when-boundaries-fail"
-repositoryUrl: "https://github.com/Xaxis/super-intelligence-when-boundaries-fail"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-super-intelligence-when-boundaries-fail/index.md"
 draft: false
 ---
 

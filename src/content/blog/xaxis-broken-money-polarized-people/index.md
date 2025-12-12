@@ -3,8 +3,8 @@ title: "Broken Money, Polarized People, and the Coming Social Reset"
 description: "Unsound money doesn’t just distort prices. It distorts trust, identity, and politics. Here is how the hidden tax of seigniorage and the distributional games of monetary policy fuel polarization, and why a hard base layer is the quiet exit."
 pubDate: "2025-09-26"
 tags: ["money", "politics", "polarization", "trust", "Bitcoin"]
-repository: "Xaxis/broken-money-polarized-people"
-repositoryUrl: "https://github.com/Xaxis/broken-money-polarized-people"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-broken-money-polarized-people/index.md"
 draft: false
 ---
 

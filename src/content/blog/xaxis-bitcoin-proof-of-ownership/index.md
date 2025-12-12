@@ -3,8 +3,8 @@ title: "Bitcoin Proof-of-Ownership Without Disclosure"
 description: "A Bitcoin-native protocol that lets users prove they control coins meeting or exceeding a value threshold without revealing which UTXOs they own. Using zero-knowledge proofs, UTXO set accumulators, and updatable witnesses, it enables portable, persistent, and privacy-preserving proofs that remain valid until the coins are spent, allowing verifiers to check collateral without ongoing interaction or surveillance."
 pubDate: "2025-08-12"
 tags: ["bitcoin", "zero-knowledge", "privacy", "collateral", "UTXO", "zkp", "proof-of-ownership"]
-repository: "Xaxis/bitcoin-proof-of-ownership"
-repositoryUrl: "https://github.com/Xaxis/bitcoin-proof-of-ownership"
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-bitcoin-proof-of-ownership/index.md"
 draft: false
 ---
 
