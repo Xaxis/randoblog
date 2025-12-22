@@ -3,6 +3,9 @@ title: "The Only Plausible Path to a Human Brain Simulation Is a Hybrid"
 description: "A pragmatic blueprint for stitching together neural mass models, spiking networks, biophysical microcircuits, and ML surrogates into something that can actually scale."
 pubDate: 2025-12-22
 tags: ["neuroscience", "brain-simulation", "computational-neuroscience", "spiking-neural-networks", "systems"]
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-human-brain-simulation-hybrid-model/index.md"
+draft: false
 ---
 
 I keep seeing this question show up in different disguises: *What computational or ML model should we use to simulate a human brain?*

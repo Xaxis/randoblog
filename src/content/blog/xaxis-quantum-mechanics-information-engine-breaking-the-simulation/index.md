@@ -3,6 +3,9 @@ title: "Quantum Mechanics Is Already an Information Engine (and That Might Be Ou
 description: "If you want simulation theory to stop being a campfire story, you need a physical fingerprint. Quantum mechanics offers a few pressure points: holography, error correction, Bell-certified randomness, and the weird global consistency of delayed-choice experiments. Here’s a testable premise I actually like: complexity-triggered decoherence."
 pubDate: 2025-12-22
 tags: ["physics", "quantum", "simulation theory", "holography", "information theory"]
+repository: "Xaxis/randoblog"
+repositoryUrl: "https://github.com/Xaxis/randoblog/blob/main/src/content/blog/xaxis-quantum-mechanics-information-engine-breaking-the-simulation/index.md"
+draft: false
 ---
 
 People love simulation theory because it feels like a shortcut. You look at the world, notice it’s quantized, noisy, probabilistic, sometimes absurd, and your brain goes: yep, software.
