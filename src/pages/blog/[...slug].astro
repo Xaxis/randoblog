@@ -75,17 +75,18 @@ markdownContent = markdownContent.replace(/\x1b\[[0-9;]*[mK]/g, '');
 markdownContent = markdownContent.replace(/^#\s+.*$/m, ''); // Remove first H1
 markdownContent = markdownContent.replace(/^\s*\n/, ''); // Remove leading whitespace
 
-// Transform relative image paths to GitHub raw URLs
-const repository = post.data?.data?.repository || post.data?.repository;
-if (repository) {
-  // Transform relative image paths like ./image.png or image.png to GitHub raw URLs
+// Transform relative image paths to use local content directory
+// Images are synced locally to src/content/blog/{slug}/ directory
+const postSlug = post.id;
+if (postSlug) {
+  // Transform relative image paths like ./image.png or image.png to local content paths
   markdownContent = markdownContent.replace(
     /!\[([^\]]*)\]\(\.\/([^)]+)\)/g,
-    `![$1](https://raw.githubusercontent.com/${repository}/main/$2)`
+    `![$1](/blog-images/${postSlug}/$2)`
   );
   markdownContent = markdownContent.replace(
     /!\[([^\]]*)\]\((?!https?:\/\/)([^)\/][^)]*)\)/g,
-    `![$1](https://raw.githubusercontent.com/${repository}/main/$2)`
+    `![$1](/blog-images/${postSlug}/$2)`
   );
 }
 
