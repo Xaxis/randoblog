@@ -2,196 +2,148 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="About - RANDOBLOG" description="Learn about the person behind RANDOBLOG – a self-proclaimed wannabe scientist with questionable lab safety habits and big dreams">
+<Layout title="About - RANDOBLOG" description="The pressure valve for thoughts that don't fit anywhere else.">
     <div class="max-w-4xl mx-auto px-6 py-16">
+        <div class="space-y-16">
 
-        <!-- Main content -->
-        <div class="space-y-12">
-            <!-- Mission Statement -->
-            <section class="card">
-                <h2 class="text-2xl font-display font-semibold text-text-primary mb-6">
-                    What is RANDOBLOG?
-                </h2>
-                <div class="space-y-4 text-text-secondary leading-relaxed">
+            <!-- Hero / Mission -->
+            <section>
+                <div class="space-y-5 text-text-secondary leading-relaxed text-lg">
+                    <h1 class="text-4xl md:text-5xl font-display font-bold text-text-primary mb-8 tracking-tight">
+                        What is RANDOBLOG?
+                    </h1>
                     <p>
-                        RANDOBLOG is where I pour my over-caffeinated curiosity into pixels. It’s an ever-shifting collection of ideas, experiments, and rabbit holes I’ve fallen into – ranging from physics and computer science to “what happens if I mix these two entirely unrelated concepts and hope it doesn’t explode.”
+                        Most of what's in my head at any given time has no business staying there. Sensor architectures for detecting things that probably don't exist, monetary policy arguments with myself at 3 AM, half-finished propulsion math on the back of a grocery receipt. RANDOBLOG is where all of that goes so I can stop thinking about it and move on to the next thing I won't finish.
                     </p>
                     <p>
-                        Think of it as my digital notebook-slash-laboratory, except without the risk of spilling acid on my shoes (again). I may not have a Nobel Prize (yet, or ever), but I’m here for the joy of exploration, a pinch of absurdity, and the occasional “Eureka!” moment that usually turns out to be me rediscovering something from 1893.
+                        Nothing here is peer-reviewed. Some of it is probably wrong. The point was never to be authoritative. It's a pressure valve for the kind of thinking that doesn't fit neatly into a job description or a conversation at a party. If something here turns out to be useful to someone, that's a happy accident. If it doesn't, at least it's out of my head and I can sleep.
                     </p>
                 </div>
             </section>
+
+            <!-- Divider -->
+            <div class="h-px bg-gradient-to-r from-transparent via-accent-primary/30 to-transparent"></div>
 
             <!-- About Me -->
-            <section class="card">
-                <h2 class="text-2xl font-display font-semibold text-text-primary mb-6">
-                    About Me
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="p-4 bg-bg-tertiary rounded-lg border border-accent-primary/20 shadow-sm hover:shadow-md hover:border-accent-primary/30 transition-all duration-200">
-                        <div class="text-accent-primary font-medium mb-2">
-                            Academic Credentials
-                        </div>
-                        <div class="text-text-secondary text-sm">
-                            None that would impress a hiring committee, but I own a suspicious number of lab coats.
-                        </div>
+            <section>
+                <h2 class="text-2xl font-display font-semibold text-text-primary mb-8">About Me</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-primary/40 transition-all duration-300">
+                        <div class="text-accent-primary font-semibold text-xs uppercase tracking-wider mb-2">Credentials</div>
+                        <div class="text-text-secondary text-sm leading-relaxed">None that would impress a hiring committee, but I own a suspicious number of lab coats.</div>
                     </div>
-                    <div class="p-4 bg-bg-tertiary rounded-lg border border-accent-secondary/20 shadow-sm hover:shadow-md hover:border-accent-secondary/30 transition-all duration-200">
-                        <div class="text-accent-secondary font-medium mb-2">
-                            Experimental Skills
-                        </div>
-                        <div class="text-text-secondary text-sm">
-                            Adept at pushing buttons I probably shouldn’t and Googling “is it supposed to smoke like that?”
-                        </div>
+                    <div class="p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-secondary/40 transition-all duration-300">
+                        <div class="text-accent-secondary font-semibold text-xs uppercase tracking-wider mb-2">Experimental Skills</div>
+                        <div class="text-text-secondary text-sm leading-relaxed">Adept at pushing buttons I probably shouldn't and Googling "is it supposed to smoke like that?"</div>
                     </div>
-                    <div class="p-4 bg-bg-tertiary rounded-lg border border-accent-primary/20 shadow-sm hover:shadow-md hover:border-accent-primary/30 transition-all duration-200">
-                        <div class="text-accent-primary font-medium mb-2">
-                            Scientific Focus
-                        </div>
-                        <div class="text-text-secondary text-sm">
-                            Whatever currently keeps me awake at 2 AM – quantum weirdness, black holes, or why my coffee tastes metallic.
-                        </div>
+                    <div class="p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-primary/40 transition-all duration-300">
+                        <div class="text-accent-primary font-semibold text-xs uppercase tracking-wider mb-2">Focus</div>
+                        <div class="text-text-secondary text-sm leading-relaxed">Whatever currently keeps me awake at 2 AM: quantum weirdness, black holes, or why my coffee tastes metallic.</div>
                     </div>
-                    <div class="p-4 bg-bg-tertiary rounded-lg border border-accent-secondary/20 shadow-sm hover:shadow-md hover:border-accent-secondary/30 transition-all duration-200">
-                        <div class="text-accent-secondary font-medium mb-2">
-                            Long-Term Goal
-                        </div>
-                        <div class="text-text-secondary text-sm">
-                            To someday be mistaken for an actual scientist in a dimly lit conference hallway.
-                        </div>
+                    <div class="p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-secondary/40 transition-all duration-300">
+                        <div class="text-accent-secondary font-semibold text-xs uppercase tracking-wider mb-2">Long-Term Goal</div>
+                        <div class="text-text-secondary text-sm leading-relaxed">To someday be mistaken for an actual scientist in a dimly lit conference hallway.</div>
                     </div>
                 </div>
             </section>
+
+            <!-- Divider -->
+            <div class="h-px bg-gradient-to-r from-transparent via-accent-secondary/30 to-transparent"></div>
 
             <!-- Projects -->
-            <section class="card">
-                <h2 class="text-2xl font-display font-semibold text-text-primary mb-6">
-                    Projects
-                </h2>
-                <p class="text-text-secondary mb-8">
-                    Things I've built when I probably should have been sleeping:
-                </p>
+            <section>
+                <h2 class="text-2xl font-display font-semibold text-text-primary mb-2">Projects</h2>
+                <p class="text-text-muted mb-8 text-sm">Things I've built when I probably should have been sleeping.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                <div class="space-y-4">
-                    <a href="https://job.rip" target="_blank" rel="noopener noreferrer" class="block p-5 bg-bg-tertiary rounded-lg border border-accent-primary/20 shadow-sm hover:shadow-md hover:border-accent-primary/40 transition-all duration-200 group">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-accent-primary font-medium group-hover:underline">job.rip</span>
-                            <span class="text-text-secondary/50 text-xs">&#x2197;</span>
+                    <a href="https://onon.me" target="_blank" rel="noopener noreferrer" class="group block p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-primary/40 hover:shadow-lg hover:shadow-accent-primary/5 transition-all duration-300">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-accent-primary font-semibold group-hover:text-accent-secondary transition-colors">onon.me</span>
+                            <span class="text-text-muted/40 text-xs group-hover:text-accent-primary/60 transition-colors">&#x2197;</span>
                         </div>
-                        <p class="text-text-secondary text-sm">
-                            A satirical "AI Labor Transition Authority" that performs career autopsies on your job title. Enter your profession, receive a darkly comedic report on how AI plans to replace you. Your cooperation in your own replacement is appreciated.
-                        </p>
+                        <p class="text-text-secondary text-sm leading-relaxed">A private, local-first personal vault. Tag, save, and organize fragments of thought without handing your data to anyone. Everything stays on your device.</p>
                     </a>
 
-                    <a href="https://hodl.pub" target="_blank" rel="noopener noreferrer" class="block p-5 bg-bg-tertiary rounded-lg border border-accent-secondary/20 shadow-sm hover:shadow-md hover:border-accent-secondary/40 transition-all duration-200 group">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-accent-secondary font-medium group-hover:underline">hodl.pub</span>
-                            <span class="text-text-secondary/50 text-xs">&#x2197;</span>
+                    <a href="https://btcar.app" target="_blank" rel="noopener noreferrer" class="group block p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-secondary/40 hover:shadow-lg hover:shadow-accent-secondary/5 transition-all duration-300">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-accent-secondary font-semibold group-hover:text-accent-primary transition-colors">btcar.app</span>
+                            <span class="text-text-muted/40 text-xs group-hover:text-accent-secondary/60 transition-colors">&#x2197;</span>
                         </div>
-                        <p class="text-text-secondary text-sm">
-                            100 Bitcoin rules to live by. A curated collection of principles covering self-custody, security, monetary philosophy, and the ideological foundations of decentralized money — for when you need a reminder that it's about more than the price.
-                        </p>
+                        <p class="text-text-secondary text-sm leading-relaxed">Point your camera at any price tag and instantly see its Bitcoin value. Real-time OCR detection with AR overlay. All processing on-device, no data leaves your phone.</p>
                     </a>
 
-                    <a href="https://apophis.bot" target="_blank" rel="noopener noreferrer" class="block p-5 bg-bg-tertiary rounded-lg border border-accent-primary/20 shadow-sm hover:shadow-md hover:border-accent-primary/40 transition-all duration-200 group">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-accent-primary font-medium group-hover:underline">apophis.bot</span>
-                            <span class="text-text-secondary/50 text-xs">&#x2197;</span>
+                    <a href="https://job.rip" target="_blank" rel="noopener noreferrer" class="group block p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-primary/40 hover:shadow-lg hover:shadow-accent-primary/5 transition-all duration-300">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-accent-primary font-semibold group-hover:text-accent-secondary transition-colors">job.rip</span>
+                            <span class="text-text-muted/40 text-xs group-hover:text-accent-primary/60 transition-colors">&#x2197;</span>
                         </div>
-                        <p class="text-text-secondary text-sm">
-                            An interactive 3D orbital simulator for asteroid 99942 Apophis. Explore near-Earth asteroid dynamics, gravitational perturbations, and visualize the infamous 2029 close approach that'll thread the needle between Earth and our satellites.
-                        </p>
+                        <p class="text-text-secondary text-sm leading-relaxed">A satirical "AI Labor Transition Authority" that performs career autopsies on your job title. Enter your profession, receive a darkly comedic report on how AI plans to replace you.</p>
                     </a>
 
-                    <a href="https://globb.bot" target="_blank" rel="noopener noreferrer" class="block p-5 bg-bg-tertiary rounded-lg border border-accent-secondary/20 shadow-sm hover:shadow-md hover:border-accent-secondary/40 transition-all duration-200 group">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-accent-secondary font-medium group-hover:underline">globb.bot</span>
-                            <span class="text-text-secondary/50 text-xs">&#x2197;</span>
+                    <a href="https://apophis.bot" target="_blank" rel="noopener noreferrer" class="group block p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-secondary/40 hover:shadow-lg hover:shadow-accent-secondary/5 transition-all duration-300">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-accent-secondary font-semibold group-hover:text-accent-primary transition-colors">apophis.bot</span>
+                            <span class="text-text-muted/40 text-xs group-hover:text-accent-secondary/60 transition-colors">&#x2197;</span>
                         </div>
-                        <p class="text-text-secondary text-sm">
-                            A canvas-based interactive visualization. Best experienced rather than explained — go poke at it.
-                        </p>
+                        <p class="text-text-secondary text-sm leading-relaxed">An interactive 3D orbital simulator for asteroid 99942 Apophis. Visualize the 2029 close approach that threads the needle between Earth and our satellites.</p>
                     </a>
 
-                    <a href="https://sentio.bot" target="_blank" rel="noopener noreferrer" class="block p-5 bg-bg-tertiary rounded-lg border border-accent-primary/20 shadow-sm hover:shadow-md hover:border-accent-primary/40 transition-all duration-200 group">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-accent-primary font-medium group-hover:underline">sentio.bot</span>
-                            <span class="text-text-secondary/50 text-xs">&#x2197;</span>
+                    <a href="https://hodl.pub" target="_blank" rel="noopener noreferrer" class="group block p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-primary/40 hover:shadow-lg hover:shadow-accent-primary/5 transition-all duration-300">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-accent-primary font-semibold group-hover:text-accent-secondary transition-colors">hodl.pub</span>
+                            <span class="text-text-muted/40 text-xs group-hover:text-accent-primary/60 transition-colors">&#x2197;</span>
                         </div>
-                        <p class="text-text-secondary text-sm">
-                            A 3D interactive simulation for modeling consciousness. Explore how information integration, self-referential processing, and temporal continuity interact to produce consciousness scores across biological, artificial, and hybrid systems.
-                        </p>
+                        <p class="text-text-secondary text-sm leading-relaxed">100 Bitcoin rules to live by. Self-custody, security, monetary philosophy, and the ideological foundations of decentralized money.</p>
                     </a>
+
+                    <a href="https://sentio.bot" target="_blank" rel="noopener noreferrer" class="group block p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-secondary/40 hover:shadow-lg hover:shadow-accent-secondary/5 transition-all duration-300">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-accent-secondary font-semibold group-hover:text-accent-primary transition-colors">sentio.bot</span>
+                            <span class="text-text-muted/40 text-xs group-hover:text-accent-secondary/60 transition-colors">&#x2197;</span>
+                        </div>
+                        <p class="text-text-secondary text-sm leading-relaxed">A 3D interactive simulation for modeling consciousness. Explore how information integration and self-referential processing produce consciousness scores across systems.</p>
+                    </a>
+
+                    <a href="https://globb.bot" target="_blank" rel="noopener noreferrer" class="group block p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-primary/40 hover:shadow-lg hover:shadow-accent-primary/5 transition-all duration-300 md:col-span-2">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-accent-primary font-semibold group-hover:text-accent-secondary transition-colors">globb.bot</span>
+                            <span class="text-text-muted/40 text-xs group-hover:text-accent-primary/60 transition-colors">&#x2197;</span>
+                        </div>
+                        <p class="text-text-secondary text-sm leading-relaxed">A canvas-based interactive visualization. Best experienced rather than explained.</p>
+                    </a>
+
                 </div>
             </section>
 
-            <!-- Features -->
-            <section class="card">
-                <h2 class="text-2xl font-display font-semibold text-text-primary mb-6">
-                    Key Features of This Blog
-                </h2>
-                <p class="text-text-secondary mb-8">
-                    In case you’re wondering what you’ve stumbled into:
-                </p>
+            <!-- Divider -->
+            <div class="h-px bg-gradient-to-r from-transparent via-accent-primary/30 to-transparent"></div>
 
-                <div class="space-y-8">
-                    <div class="p-6 bg-bg-tertiary rounded-lg border border-accent-primary/20 shadow-sm hover:shadow-md hover:border-accent-primary/30 transition-all duration-200">
-                        <div class="text-accent-primary font-medium mb-3">Mathematical Content:</div>
-                        <p class="text-text-secondary">
-                            Supports full LaTeX rendering, because math is beautiful… even when I’m using it to prove something completely trivial.
-                        </p>
+            <!-- Colophon -->
+            <section>
+                <h2 class="text-2xl font-display font-semibold text-text-primary mb-8">Colophon</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="p-4 bg-bg-secondary rounded-xl border border-border-color/50">
+                        <div class="text-accent-primary font-semibold text-xs uppercase tracking-wider mb-2">Math</div>
+                        <p class="text-text-muted text-sm">Full LaTeX rendering via KaTeX. Because if you can't put an equation in it, what's the point.</p>
                     </div>
-
-                    <div class="p-6 bg-bg-tertiary rounded-lg border border-accent-secondary/20 shadow-sm hover:shadow-md hover:border-accent-secondary/30 transition-all duration-200">
-                        <div class="text-accent-secondary font-medium mb-3">Live Content:</div>
-                        <p class="text-text-secondary">
-                            Automatically synced from GitHub so my bad ideas update in real time.
-                        </p>
+                    <div class="p-4 bg-bg-secondary rounded-xl border border-border-color/50">
+                        <div class="text-accent-secondary font-semibold text-xs uppercase tracking-wider mb-2">Source</div>
+                        <p class="text-text-muted text-sm">Every article links to its markdown on GitHub. Synced on push so bad ideas update in real time.</p>
                     </div>
-
-                    <div class="p-6 bg-bg-tertiary rounded-lg border border-accent-primary/20 shadow-sm hover:shadow-md hover:border-accent-primary/30 transition-all duration-200">
-                        <div class="text-accent-primary font-medium mb-3">Research Focus:</div>
-                        <p class="text-text-secondary">
-                            Physics, AI, space stuff, and anything else that lets me pretend I’m in a sci-fi movie.
-                        </p>
+                    <div class="p-4 bg-bg-secondary rounded-xl border border-border-color/50">
+                        <div class="text-accent-primary font-semibold text-xs uppercase tracking-wider mb-2">Scope</div>
+                        <p class="text-text-muted text-sm">Physics, AI, Bitcoin, space, consciousness, and anything else that won't leave me alone at night.</p>
                     </div>
                 </div>
             </section>
 
             <!-- CTA -->
-            <section class="text-center">
-                <div class="card">
-                    <h2 class="text-2xl font-display font-semibold text-text-primary mb-6">
-                        Ready to explore?
-                    </h2>
-                    <p class="text-text-secondary mb-8">
-                        Enter the chaos. It’s educational… probably.
-                    </p>
-                    <a href="/" class="btn-primary">
-                        View Posts
-                    </a>
-                </div>
+            <section class="text-center py-8">
+                <a href="/" class="btn-primary text-lg px-8 py-4">
+                    Read the posts
+                </a>
             </section>
+
         </div>
     </div>
-
-    <!-- KaTeX CSS and JS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" crossorigin="anonymous">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" crossorigin="anonymous"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
-
-    <!-- Initialize KaTeX auto-render -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            if (typeof renderMathInElement !== 'undefined') {
-                renderMathInElement(document.body, {
-                    delimiters: [
-                        {left: '$$', right: '$$', display: true},
-                        {left: '$', right: '$', display: false}
-                    ],
-                    throwOnError: false
-                });
-            }
-        });
-    </script>
 </Layout>
