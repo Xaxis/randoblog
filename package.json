@@ -13,6 +13,7 @@
     "deploy:force": "npm run build && node scripts/deploy.js --force"
   },
   "dependencies": {
+    "@plausible-analytics/tracker": "^0.4.5",
     "@tailwindcss/vite": "^4.1.11",
     "astro": "^5.12.9",
     "katex": "^0.16.22",

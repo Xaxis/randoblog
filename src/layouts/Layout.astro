@@ -22,6 +22,16 @@ const { title, description = "A retro-styled blog with 8-bit aesthetics" } = Ast
       gtag('config', 'G-5R0D418NCG');
     </script>
 
+    <!-- Plausible Analytics (privacy-friendly, NPM tracker) -->
+    <script>
+      import { init } from '@plausible-analytics/tracker';
+      init({
+        domain: 'randoblog.me',
+        outboundLinks: true,
+        fileDownloads: true,
+      });
+    </script>
+
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
