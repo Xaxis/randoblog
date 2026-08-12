@@ -1,4 +1,11 @@
-/** @type {import('tailwindcss').Config} */
+/**
+ * NOTE: Tailwind v4 does not load this file unless the CSS entrypoint declares
+ * `@config`. It does not. The live design tokens (colors, fonts) are defined in
+ * the `@theme inline` block at the top of src/styles/global.css; edit them there.
+ * This file is kept only for tooling that still reads a config.
+ *
+ * @type {import('tailwindcss').Config}
+ */
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {

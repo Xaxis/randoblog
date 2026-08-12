@@ -1,165 +1,510 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog', ({ data }) => !data.draft);
+const postCount = posts.length;
+
+type Project = {
+  name: string;
+  url: string;
+  category: 'Bitcoin' | 'AI' | 'Hardware' | 'Space' | 'Tools';
+  tags: string[];
+  blurb: string;
+  featured?: boolean;
+  /** Span both columns without the "New" badge, so the grid closes evenly. */
+  wide?: boolean;
+};
+
+const projects: Project[] = [
+  {
+    name: 'nband.space',
+    url: 'https://nband.space',
+    category: 'Hardware',
+    tags: ['Sensing', 'Open hardware', 'UAP'],
+    featured: true,
+    blurb:
+      'An open multi-spectral sensing platform. A buildable node that watches the sky across as many as thirteen bands at once, disciplines its clock against GNSS to a few hundred nanoseconds so cross-band coincidence is a measurement rather than a figure of speech, and publishes everything it records. The top of the classification ladder is "unresolved". The schema has no way to encode "artificial", and that is deliberate.',
+  },
+  {
+    name: 'oapogee.space',
+    url: 'https://oapogee.space',
+    category: 'Hardware',
+    tags: ['Telemetry', 'Rocketry', 'Open hardware'],
+    featured: true,
+    blurb:
+      'An open source telemetry payload for model rockets, and the documentation that teaches you to build one. Altitude, acceleration and orientation logged to onboard flash through a flight, optionally downlinked over LoRa with GNSS position for recovery. One rule governs the whole project: never publish a number that has not been measured or sourced. Which is why the bill of materials currently has no prices in it.',
+  },
+  {
+    name: 'ochk.io',
+    url: 'https://ochk.io',
+    category: 'Bitcoin',
+    tags: ['Proof of reserves', 'Signatures'],
+    blurb:
+      'OrangeCheck: a Bitcoin-native proof of skin in the game. Sign a message with an address you control and anyone can verify your bonded sats and how long they have sat, straight from public chain data. No accounts, no custody, nothing to trust.',
+  },
+  {
+    name: 'btcar.app',
+    url: 'https://btcar.app',
+    category: 'Bitcoin',
+    tags: ['AR', 'On-device OCR'],
+    blurb:
+      'Point your camera at any price tag and see its Bitcoin value in place. Real-time OCR with an AR overlay, all processing on-device. Nothing leaves the phone.',
+  },
+  {
+    name: 'hodl.pub',
+    url: 'https://hodl.pub',
+    category: 'Bitcoin',
+    tags: ['Self-custody', 'Monetary theory'],
+    blurb:
+      '100 Bitcoin rules to live by. Self-custody, operational security, monetary philosophy, and the ideological foundations of money nobody can print.',
+  },
+  {
+    name: 'atypic.ai',
+    url: 'https://atypic.ai',
+    category: 'AI',
+    tags: ['Agents', 'Enterprise'],
+    blurb:
+      'Managed AI agent automations for enterprise. Deployment and operation at scale, handled end to end, so large organizations can automate complex workflows without standing up the infrastructure themselves.',
+  },
+  {
+    name: 'sentio.bot',
+    url: 'https://sentio.bot',
+    category: 'AI',
+    tags: ['Consciousness', '3D simulation'],
+    blurb:
+      'A 3D interactive simulation for modeling consciousness. Adjust information integration and self-referential processing and watch how the resulting scores move across different systems.',
+  },
+  {
+    name: 'job.rip',
+    url: 'https://job.rip',
+    category: 'AI',
+    tags: ['Satire', 'Labor'],
+    blurb:
+      'A satirical "AI Labor Transition Authority" that performs career autopsies on your job title. Enter your profession, receive a darkly comedic report on how the machines intend to replace you. The joke has aged worse than expected.',
+  },
+  {
+    name: 'apophis.bot',
+    url: 'https://apophis.bot',
+    category: 'Space',
+    tags: ['Orbital mechanics', '3D'],
+    blurb:
+      'An interactive 3D orbital simulator for asteroid 99942 Apophis, built around the 2029 close approach that threads the needle between Earth and the geostationary belt.',
+  },
+  {
+    name: 'onon.me',
+    url: 'https://onon.me',
+    category: 'Tools',
+    tags: ['Local-first', 'Privacy'],
+    blurb:
+      'A private, local-first personal vault. Tag, save, and organize fragments of thought without handing your data to anyone. Everything stays on your device.',
+  },
+  {
+    name: 'globb.bot',
+    url: 'https://globb.bot',
+    category: 'Tools',
+    tags: ['Canvas', 'Generative'],
+    wide: true,
+    blurb:
+      'A canvas-based interactive visualization. Best experienced rather than explained.',
+  },
+];
+
+const categories = ['All', 'Hardware', 'Bitcoin', 'AI', 'Space', 'Tools'];
+
+const topics = [
+  {
+    label: 'Money',
+    body:
+      'Bitcoin, monetary theory, and what happens to a debt-based system when the productivity gains stop showing up in wages.',
+  },
+  {
+    label: 'Machines',
+    body:
+      'AI as civilizational infrastructure rather than product. Agents, labor displacement, and who ends up holding the settlement layer.',
+  },
+  {
+    label: 'Everything else',
+    body:
+      'Physics, propulsion math, sensor architectures, UAP, consciousness, and whatever else refuses to leave me alone at 3 AM.',
+  },
+];
 ---
 
-<Layout title="About - RANDOBLOG" description="The pressure valve for thoughts that don't fit anywhere else.">
-    <div class="max-w-4xl mx-auto px-6 py-16">
-        <div class="space-y-16">
+<Layout
+  title="About - RANDOBLOG"
+  description="The pressure valve for thoughts that don't fit anywhere else. Essays on Bitcoin, AI, physics, and the projects that come out of them."
+>
+  <div class="max-w-4xl mx-auto px-6 py-14 md:py-20">
+    <div class="space-y-20">
 
-            <!-- Hero / Mission -->
-            <section>
-                <div class="space-y-5 text-text-secondary leading-relaxed text-lg">
-                    <h1 class="text-4xl md:text-5xl font-display font-bold text-text-primary mb-8 tracking-tight">
-                        What is RANDOBLOG?
-                    </h1>
-                    <p>
-                        Most of what's in my head at any given time has no business staying there. Sensor architectures for detecting things that probably don't exist, monetary policy arguments with myself at 3 AM, half-finished propulsion math on the back of a grocery receipt. RANDOBLOG is where all of that goes so I can stop thinking about it and move on to the next thing I won't finish.
-                    </p>
-                    <p>
-                        Nothing here is peer-reviewed. Some of it is probably wrong. The point was never to be authoritative. It's a pressure valve for the kind of thinking that doesn't fit neatly into a job description or a conversation at a party. If something here turns out to be useful to someone, that's a happy accident. If it doesn't, at least it's out of my head and I can sleep.
-                    </p>
-                </div>
-            </section>
+      <!-- Hero -->
+      <section>
+        <p class="eyebrow text-accent-primary mb-4">About</p>
+        <h1 class="hero-title mb-8">What is RANDOBLOG?</h1>
 
-            <!-- Divider -->
-            <div class="h-px bg-gradient-to-r from-transparent via-accent-primary/30 to-transparent"></div>
-
-            <!-- About Me -->
-            <section>
-                <h2 class="text-2xl font-display font-semibold text-text-primary mb-8">About Me</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-primary/40 transition-all duration-300">
-                        <div class="text-accent-primary font-semibold text-xs uppercase tracking-wider mb-2">Credentials</div>
-                        <div class="text-text-secondary text-sm leading-relaxed">None that would impress a hiring committee, but I own a suspicious number of lab coats.</div>
-                    </div>
-                    <div class="p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-secondary/40 transition-all duration-300">
-                        <div class="text-accent-secondary font-semibold text-xs uppercase tracking-wider mb-2">Experimental Skills</div>
-                        <div class="text-text-secondary text-sm leading-relaxed">Adept at pushing buttons I probably shouldn't and Googling "is it supposed to smoke like that?"</div>
-                    </div>
-                    <div class="p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-primary/40 transition-all duration-300">
-                        <div class="text-accent-primary font-semibold text-xs uppercase tracking-wider mb-2">Focus</div>
-                        <div class="text-text-secondary text-sm leading-relaxed">Whatever currently keeps me awake at 2 AM: quantum weirdness, black holes, or why my coffee tastes metallic.</div>
-                    </div>
-                    <div class="p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-secondary/40 transition-all duration-300">
-                        <div class="text-accent-secondary font-semibold text-xs uppercase tracking-wider mb-2">Long-Term Goal</div>
-                        <div class="text-text-secondary text-sm leading-relaxed">To someday be mistaken for an actual scientist in a dimly lit conference hallway.</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Divider -->
-            <div class="h-px bg-gradient-to-r from-transparent via-accent-secondary/30 to-transparent"></div>
-
-            <!-- Projects -->
-            <section>
-                <h2 class="text-2xl font-display font-semibold text-text-primary mb-2">Projects</h2>
-                <p class="text-text-muted mb-8 text-sm">Things I've built when I probably should have been sleeping.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                    <a href="https://onon.me" target="_blank" rel="noopener noreferrer" class="group block p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-primary/40 hover:shadow-lg hover:shadow-accent-primary/5 transition-all duration-300">
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="text-accent-primary font-semibold group-hover:text-accent-secondary transition-colors">onon.me</span>
-                            <span class="text-text-muted/40 text-xs group-hover:text-accent-primary/60 transition-colors">&#x2197;</span>
-                        </div>
-                        <p class="text-text-secondary text-sm leading-relaxed">A private, local-first personal vault. Tag, save, and organize fragments of thought without handing your data to anyone. Everything stays on your device.</p>
-                    </a>
-
-                    <a href="https://btcar.app" target="_blank" rel="noopener noreferrer" class="group block p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-secondary/40 hover:shadow-lg hover:shadow-accent-secondary/5 transition-all duration-300">
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="text-accent-secondary font-semibold group-hover:text-accent-primary transition-colors">btcar.app</span>
-                            <span class="text-text-muted/40 text-xs group-hover:text-accent-secondary/60 transition-colors">&#x2197;</span>
-                        </div>
-                        <p class="text-text-secondary text-sm leading-relaxed">Point your camera at any price tag and instantly see its Bitcoin value. Real-time OCR detection with AR overlay. All processing on-device, no data leaves your phone.</p>
-                    </a>
-
-                    <a href="https://job.rip" target="_blank" rel="noopener noreferrer" class="group block p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-primary/40 hover:shadow-lg hover:shadow-accent-primary/5 transition-all duration-300">
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="text-accent-primary font-semibold group-hover:text-accent-secondary transition-colors">job.rip</span>
-                            <span class="text-text-muted/40 text-xs group-hover:text-accent-primary/60 transition-colors">&#x2197;</span>
-                        </div>
-                        <p class="text-text-secondary text-sm leading-relaxed">A satirical "AI Labor Transition Authority" that performs career autopsies on your job title. Enter your profession, receive a darkly comedic report on how AI plans to replace you.</p>
-                    </a>
-
-                    <a href="https://apophis.bot" target="_blank" rel="noopener noreferrer" class="group block p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-secondary/40 hover:shadow-lg hover:shadow-accent-secondary/5 transition-all duration-300">
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="text-accent-secondary font-semibold group-hover:text-accent-primary transition-colors">apophis.bot</span>
-                            <span class="text-text-muted/40 text-xs group-hover:text-accent-secondary/60 transition-colors">&#x2197;</span>
-                        </div>
-                        <p class="text-text-secondary text-sm leading-relaxed">An interactive 3D orbital simulator for asteroid 99942 Apophis. Visualize the 2029 close approach that threads the needle between Earth and our satellites.</p>
-                    </a>
-
-                    <a href="https://hodl.pub" target="_blank" rel="noopener noreferrer" class="group block p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-primary/40 hover:shadow-lg hover:shadow-accent-primary/5 transition-all duration-300">
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="text-accent-primary font-semibold group-hover:text-accent-secondary transition-colors">hodl.pub</span>
-                            <span class="text-text-muted/40 text-xs group-hover:text-accent-primary/60 transition-colors">&#x2197;</span>
-                        </div>
-                        <p class="text-text-secondary text-sm leading-relaxed">100 Bitcoin rules to live by. Self-custody, security, monetary philosophy, and the ideological foundations of decentralized money.</p>
-                    </a>
-
-                    <a href="https://sentio.bot" target="_blank" rel="noopener noreferrer" class="group block p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-secondary/40 hover:shadow-lg hover:shadow-accent-secondary/5 transition-all duration-300">
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="text-accent-secondary font-semibold group-hover:text-accent-primary transition-colors">sentio.bot</span>
-                            <span class="text-text-muted/40 text-xs group-hover:text-accent-secondary/60 transition-colors">&#x2197;</span>
-                        </div>
-                        <p class="text-text-secondary text-sm leading-relaxed">A 3D interactive simulation for modeling consciousness. Explore how information integration and self-referential processing produce consciousness scores across systems.</p>
-                    </a>
-
-                    <a href="https://ochk.io" target="_blank" rel="noopener noreferrer" class="group block p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-primary/40 hover:shadow-lg hover:shadow-accent-primary/5 transition-all duration-300">
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="text-accent-primary font-semibold group-hover:text-accent-secondary transition-colors">ochk.io</span>
-                            <span class="text-text-muted/40 text-xs group-hover:text-accent-primary/60 transition-colors">&#x2197;</span>
-                        </div>
-                        <p class="text-text-secondary text-sm leading-relaxed">OrangeCheck: a Bitcoin-native proof of skin in the game. Sign a message with an address you control and anyone can verify your bonded sats and how long they've sat, straight from public chain data. No accounts, no custody, nothing to trust.</p>
-                    </a>
-
-                    <a href="https://atypic.ai" target="_blank" rel="noopener noreferrer" class="group block p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-secondary/40 hover:shadow-lg hover:shadow-accent-secondary/5 transition-all duration-300">
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="text-accent-secondary font-semibold group-hover:text-accent-primary transition-colors">atypic.ai</span>
-                            <span class="text-text-muted/40 text-xs group-hover:text-accent-secondary/60 transition-colors">&#x2197;</span>
-                        </div>
-                        <p class="text-text-secondary text-sm leading-relaxed">Managed AI agent automations for enterprise. Deployment and operation of AI agents at scale, handled end to end so large organizations can automate complex workflows without standing up the infrastructure themselves.</p>
-                    </a>
-
-                    <a href="https://globb.bot" target="_blank" rel="noopener noreferrer" class="group block p-5 bg-bg-secondary rounded-xl border border-border-color/50 hover:border-accent-primary/40 hover:shadow-lg hover:shadow-accent-primary/5 transition-all duration-300 md:col-span-2">
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="text-accent-primary font-semibold group-hover:text-accent-secondary transition-colors">globb.bot</span>
-                            <span class="text-text-muted/40 text-xs group-hover:text-accent-primary/60 transition-colors">&#x2197;</span>
-                        </div>
-                        <p class="text-text-secondary text-sm leading-relaxed">A canvas-based interactive visualization. Best experienced rather than explained.</p>
-                    </a>
-
-                </div>
-            </section>
-
-            <!-- Divider -->
-            <div class="h-px bg-gradient-to-r from-transparent via-accent-primary/30 to-transparent"></div>
-
-            <!-- Colophon -->
-            <section>
-                <h2 class="text-2xl font-display font-semibold text-text-primary mb-8">Colophon</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="p-4 bg-bg-secondary rounded-xl border border-border-color/50">
-                        <div class="text-accent-primary font-semibold text-xs uppercase tracking-wider mb-2">Math</div>
-                        <p class="text-text-muted text-sm">Full LaTeX rendering via KaTeX. Because if you can't put an equation in it, what's the point.</p>
-                    </div>
-                    <div class="p-4 bg-bg-secondary rounded-xl border border-border-color/50">
-                        <div class="text-accent-secondary font-semibold text-xs uppercase tracking-wider mb-2">Source</div>
-                        <p class="text-text-muted text-sm">Every article links to its markdown on GitHub. Synced on push so bad ideas update in real time.</p>
-                    </div>
-                    <div class="p-4 bg-bg-secondary rounded-xl border border-border-color/50">
-                        <div class="text-accent-primary font-semibold text-xs uppercase tracking-wider mb-2">Scope</div>
-                        <p class="text-text-muted text-sm">Physics, AI, Bitcoin, space, consciousness, and anything else that won't leave me alone at night.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- CTA -->
-            <section class="text-center py-8">
-                <a href="/" class="btn-primary text-lg px-8 py-4">
-                    Read the posts
-                </a>
-            </section>
-
+        <div class="space-y-5 text-text-secondary leading-relaxed text-lg max-w-[62ch]">
+          <p>
+            Most of what's in my head at any given time has no business staying there. Sensor
+            architectures for detecting things that probably don't exist, monetary policy arguments
+            with myself at 3 AM, half-finished propulsion math on the back of a grocery receipt.
+            RANDOBLOG is where all of that goes so I can stop thinking about it and move on to the
+            next thing I won't finish.
+          </p>
+          <p>
+            Nothing here is peer-reviewed. Some of it is probably wrong. The point was never to be
+            authoritative. It's a pressure valve for the kind of thinking that doesn't fit neatly
+            into a job description or a conversation at a party. Occasionally a piece of it escapes
+            and turns into something buildable, which is what the projects below are.
+          </p>
         </div>
+
+        <!-- Stat strip -->
+        <dl class="mt-10 grid grid-cols-3 gap-px bg-border-color/40 rounded-xl overflow-hidden border border-border-color/40">
+          <div class="bg-bg-secondary px-4 py-5 text-center">
+            <dt class="eyebrow text-text-muted/70 mb-1.5">Articles</dt>
+            <dd class="text-2xl font-display font-semibold text-text-primary">{postCount}</dd>
+          </div>
+          <div class="bg-bg-secondary px-4 py-5 text-center">
+            <dt class="eyebrow text-text-muted/70 mb-1.5">Projects</dt>
+            <dd class="text-2xl font-display font-semibold text-text-primary">{projects.length}</dd>
+          </div>
+          <div class="bg-bg-secondary px-4 py-5 text-center">
+            <dt class="eyebrow text-text-muted/70 mb-1.5">Peer reviews</dt>
+            <dd class="text-2xl font-display font-semibold text-text-primary">0</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- What shows up here -->
+      <section>
+        <p class="eyebrow text-accent-secondary mb-3">Subject matter</p>
+        <h2 class="section-title mb-3">What shows up here</h2>
+        <p class="text-text-muted mb-8 max-w-[62ch]">
+          Three loose buckets. The overlap between them is where most of the writing actually
+          happens.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {topics.map((topic) => (
+            <div class="p-5 bg-bg-secondary rounded-xl border border-border-color/50">
+              <div class="eyebrow text-accent-primary mb-2">{topic.label}</div>
+              <p class="text-text-secondary text-sm leading-relaxed">{topic.body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- Projects -->
+      <section id="projects">
+        <p class="eyebrow text-accent-primary mb-3">Built</p>
+        <h2 class="section-title mb-3">Projects</h2>
+        <p class="text-text-muted mb-6 max-w-[62ch]">
+          Things that made it out of the notebook. Most of them started as an argument I lost with
+          myself and ended as something you can open in a browser.
+        </p>
+
+        <!-- Category filter -->
+        <div class="flex flex-wrap gap-2 mb-8" role="group" aria-label="Filter projects by category">
+          {categories.map((cat) => (
+            <button
+              type="button"
+              class="filter-chip"
+              data-filter={cat}
+              aria-pressed={cat === 'All' ? 'true' : 'false'}
+            >
+              {cat}
+              <span class="text-text-muted/50 ml-1.5 tabular-nums">
+                {cat === 'All'
+                  ? projects.length
+                  : projects.filter((p) => p.category === cat).length}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        <div id="project-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {projects.map((project, i) => (
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-category={project.category}
+              class:list={[
+                'project-card group relative flex flex-col p-5 bg-bg-secondary rounded-xl border border-border-color/50 overflow-hidden',
+                (project.featured || project.wide) && 'md:col-span-2',
+                i % 2 === 0 ? 'accent-a' : 'accent-b',
+              ]}
+            >
+              <span class="card-rule" aria-hidden="true"></span>
+
+              <div class="flex items-start justify-between gap-4 mb-3">
+                <h3 class="card-name font-mono text-base font-semibold tracking-tight">
+                  {project.name}
+                </h3>
+                <span class="flex items-center gap-2 flex-shrink-0">
+                  {project.featured && (
+                    <span class="new-badge">New</span>
+                  )}
+                  <span class="card-arrow text-text-muted/40 text-sm leading-none">&#x2197;</span>
+                </span>
+              </div>
+
+              <p class="text-text-secondary text-sm leading-relaxed flex-1">
+                {project.blurb}
+              </p>
+
+              <div class="flex flex-wrap gap-1.5 mt-4">
+                {project.tags.map((tag) => (
+                  <span class="chip">{tag}</span>
+                ))}
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <p id="filter-empty" class="hidden text-text-muted text-sm py-8 text-center">
+          Nothing in that category yet.
+        </p>
+      </section>
+
+      <!-- Colophon -->
+      <section>
+        <p class="eyebrow text-accent-secondary mb-3">How it's made</p>
+        <h2 class="section-title mb-8">Colophon</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-5 bg-bg-secondary rounded-xl border border-border-color/50">
+            <div class="eyebrow text-accent-primary mb-2">Stack</div>
+            <p class="text-text-muted text-sm leading-relaxed">
+              Astro and Tailwind, statically generated, deployed to GitHub Pages on every push to
+              main. No database, no comments, no newsletter modal.
+            </p>
+          </div>
+          <div class="p-5 bg-bg-secondary rounded-xl border border-border-color/50">
+            <div class="eyebrow text-accent-secondary mb-2">Math</div>
+            <p class="text-text-muted text-sm leading-relaxed">
+              Full LaTeX rendering via KaTeX. If you can't put an equation in it, what's the point.
+            </p>
+          </div>
+          <div class="p-5 bg-bg-secondary rounded-xl border border-border-color/50">
+            <div class="eyebrow text-accent-primary mb-2">Source</div>
+            <p class="text-text-muted text-sm leading-relaxed">
+              Every article links to its markdown on GitHub, synced on push, so bad ideas get
+              corrected in public.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Elsewhere / CTA -->
+      <section>
+        <p class="eyebrow text-accent-primary mb-3">Elsewhere</p>
+        <h2 class="section-title mb-6">Find me</h2>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <a href="/" class="btn-primary">Read the posts</a>
+          <a
+            href="https://github.com/Xaxis"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-secondary"
+          >
+            GitHub
+          </a>
+          <a
+            href="https://x.com/TheBTCViking"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-secondary"
+          >
+            X
+          </a>
+        </div>
+      </section>
+
     </div>
+  </div>
 </Layout>
+
+<style>
+  /* Typography control: global.css sets unlayered h1/h2 rules, so these
+     scoped selectors need the extra specificity to win. */
+  h1.hero-title {
+    font-size: 2.5rem;
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 768px) {
+    h1.hero-title {
+      font-size: 3.25rem;
+    }
+  }
+
+  h3.card-name {
+    font-size: 1.0625rem;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    margin-bottom: 0;
+  }
+
+  h2.section-title {
+    font-size: 1.75rem;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+    margin-bottom: 0;
+  }
+
+  .eyebrow {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  /* Filter chips */
+  .filter-chip {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    padding: 0.375rem 0.75rem;
+    border-radius: 9999px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .filter-chip:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-primary);
+  }
+
+  .filter-chip[aria-pressed='true'] {
+    color: var(--bg-primary);
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+  }
+
+  .filter-chip[aria-pressed='true'] span {
+    color: var(--bg-primary);
+    opacity: 0.65;
+  }
+
+  /* Project cards */
+  .project-card {
+    transition:
+      border-color 0.25s ease,
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  .project-card .card-name {
+    color: var(--accent-primary);
+    transition: color 0.25s ease;
+  }
+
+  .project-card.accent-b .card-name {
+    color: var(--accent-secondary);
+  }
+
+  .card-rule {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+  }
+
+  .project-card:hover {
+    border-color: color-mix(in srgb, var(--accent-primary) 45%, transparent);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.45);
+  }
+
+  .project-card:hover .card-rule {
+    transform: scaleX(1);
+  }
+
+  .project-card:hover .card-arrow {
+    color: var(--accent-primary);
+    transform: translate(2px, -2px);
+  }
+
+  .card-arrow {
+    display: inline-block;
+    transition: color 0.25s ease, transform 0.25s ease;
+  }
+
+  .project-card:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+  }
+
+  .new-badge {
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.125rem 0.4rem;
+    border-radius: 9999px;
+    color: var(--accent-primary);
+    border: 1px solid color-mix(in srgb, var(--accent-primary) 40%, transparent);
+    background: color-mix(in srgb, var(--accent-primary) 12%, transparent);
+  }
+
+  .chip {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    padding: 0.1875rem 0.5rem;
+    border-radius: 0.375rem;
+    color: var(--text-muted);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-card,
+    .card-rule,
+    .card-arrow,
+    .filter-chip {
+      transition: none;
+    }
+
+    .project-card:hover {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>('.filter-chip');
+  const cards = document.querySelectorAll<HTMLAnchorElement>('.project-card');
+  const empty = document.getElementById('filter-empty');
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const filter = chip.dataset.filter;
+
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+
+      let visible = 0;
+      cards.forEach((card) => {
+        const match = filter === 'All' || card.dataset.category === filter;
+        card.classList.toggle('hidden', !match);
+        if (match) visible++;
+      });
+
+      empty?.classList.toggle('hidden', visible > 0);
+    });
+  });
+</script>

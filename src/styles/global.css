@@ -1,6 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
+/* Tailwind v4 reads its design tokens from CSS, not tailwind.config.js.
+   These map the theme variables below onto utility classes such as
+   bg-bg-secondary, text-text-muted, border-border-color and font-display.
+   `inline` substitutes the var reference directly into each utility so the
+   values keep tracking [data-theme] at runtime. */
+@theme inline {
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-tertiary: var(--bg-tertiary);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-accent-purple: var(--accent-purple);
+  --color-accent-cyan: var(--accent-cyan);
+
+  --color-border-color: var(--border-color);
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+}
+
 /* Theme variables */
 :root[data-theme="dark"] {
   --bg-primary: #0d1117;
