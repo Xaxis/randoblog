@@ -49,8 +49,14 @@ const facts = [
 
       <!-- Fingerprint -->
       <section>
-        <p class="eyebrow text-accent-secondary mb-3">Compare this by eye</p>
-        <h2 class="section-title mb-6">Fingerprint</h2>
+        <!-- Spacing lives on this wrapper, not on the h2. global.css has an
+             unlayered `h1..h6 { margin-bottom }` rule, and Tailwind utilities
+             sit in @layer utilities, which loses to any unlayered rule. An
+             `mb-*` on the heading itself would silently do nothing. -->
+        <div class="mb-6">
+          <p class="eyebrow text-accent-secondary mb-3">Compare this by eye</p>
+          <h2 class="section-title">Fingerprint</h2>
+        </div>
 
         <div class="fingerprint-box">
           <code class="fingerprint">{fingerprint}</code>
