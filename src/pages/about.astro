@@ -149,8 +149,14 @@ const topics = [
 
       <!-- Hero -->
       <section>
-        <p class="eyebrow text-accent-primary mb-4">About</p>
-        <h1 class="hero-title mb-8">What is RANDOBLOG?</h1>
+        <!-- Spacing sits on this wrapper, not on the heading. global.css has an
+             unlayered `h1..h6 { margin-bottom }` rule, and Tailwind utilities live
+             in @layer utilities, which loses to any unlayered rule regardless of
+             specificity. An `mb-*` on the heading itself is silently ignored. -->
+        <div class="mb-8">
+          <p class="eyebrow text-accent-primary mb-4">About</p>
+          <h1 class="hero-title">What is RANDOBLOG?</h1>
+        </div>
 
         <div class="space-y-5 text-text-secondary leading-relaxed text-lg max-w-[62ch]">
           <p>
@@ -187,8 +193,10 @@ const topics = [
 
       <!-- What shows up here -->
       <section>
-        <p class="eyebrow text-accent-secondary mb-3">Subject matter</p>
-        <h2 class="section-title mb-3">What shows up here</h2>
+        <div class="mb-3">
+          <p class="eyebrow text-accent-secondary mb-3">Subject matter</p>
+          <h2 class="section-title">What shows up here</h2>
+        </div>
         <p class="text-text-muted mb-8 max-w-[62ch]">
           Three loose buckets. The overlap between them is where most of the writing actually
           happens.
@@ -206,8 +214,10 @@ const topics = [
 
       <!-- Projects -->
       <section id="projects">
-        <p class="eyebrow text-accent-primary mb-3">Built</p>
-        <h2 class="section-title mb-3">Projects</h2>
+        <div class="mb-3">
+          <p class="eyebrow text-accent-primary mb-3">Built</p>
+          <h2 class="section-title">Projects</h2>
+        </div>
         <p class="text-text-muted mb-6 max-w-[62ch]">
           Things that made it out of the notebook. Most of them started as an argument I lost with
           myself and ended as something you can open in a browser.
@@ -279,8 +289,10 @@ const topics = [
 
       <!-- Colophon -->
       <section>
-        <p class="eyebrow text-accent-secondary mb-3">How it's made</p>
-        <h2 class="section-title mb-8">Colophon</h2>
+        <div class="mb-8">
+          <p class="eyebrow text-accent-secondary mb-3">How it's made</p>
+          <h2 class="section-title">Colophon</h2>
+        </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div class="p-5 bg-bg-secondary rounded-xl border border-border-color/50">
@@ -308,8 +320,10 @@ const topics = [
 
       <!-- Elsewhere / CTA -->
       <section>
-        <p class="eyebrow text-accent-primary mb-3">Elsewhere</p>
-        <h2 class="section-title mb-6">Find me</h2>
+        <div class="mb-6">
+          <p class="eyebrow text-accent-primary mb-3">Elsewhere</p>
+          <h2 class="section-title">Find me</h2>
+        </div>
 
         <div class="flex flex-wrap items-center gap-3">
           <a href="/" class="btn-primary">Read the posts</a>
