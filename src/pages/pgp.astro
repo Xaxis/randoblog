@@ -1,0 +1,222 @@
+---
+import { readFileSync } from 'node:fs';
+import Layout from '../layouts/Layout.astro';
+
+/* Read the armored key off disk at build time so the bytes shipped to the
+   browser are the exact bytes `gpg --armor --export` produced. Nothing
+   re-wraps it, nothing prettifies it. public/pubkey.asc is the same file
+   served raw at /pubkey.asc. */
+const armoredKey = readFileSync(
+  new URL('../../public/pubkey.asc', import.meta.url),
+  'utf-8',
+).trimEnd();
+
+const email = 'wil@ochk.io';
+const fingerprint = 'CE7F 4A8F 5116 783E DBEA  F1FA 8A78 B24D 5C6D 5892';
+
+const facts = [
+  { label: 'Key ID', value: '8A78 B24D 5C6D 5892' },
+  { label: 'Type', value: 'ed25519 (sign), cv25519 (encrypt)' },
+  { label: 'Created', value: '2026-09-07' },
+  { label: 'Expires', value: '2028-09-06' },
+];
+---
+
+<Layout
+  title="PGP Key - RANDOBLOG"
+  description="Public PGP key for wil@ochk.io. Fingerprint CE7F 4A8F 5116 783E DBEA F1FA 8A78 B24D 5C6D 5892. Encrypt mail to me, or verify a signature from me."
+>
+  <div class="max-w-4xl mx-auto px-6 py-14 md:py-20">
+    <div class="space-y-14">
+
+      <!-- Intro -->
+      <section>
+        <p class="eyebrow text-accent-primary mb-4">Contact</p>
+        <h1 class="hero-title mb-8">PGP key</h1>
+
+        <div class="space-y-5 text-text-secondary leading-relaxed text-lg max-w-[62ch]">
+          <p>
+            This is my public key. Use it to send me encrypted mail at
+            <a href={`mailto:${email}`} class="text-accent-primary hover:underline font-mono text-base">{email}</a>,
+            or to verify that something signed with my name actually came from me.
+          </p>
+          <p class="text-base text-text-muted">
+            Check the fingerprint below against a copy you got somewhere else before you trust it.
+            A key served over the same channel as the claim it authenticates proves nothing on its own.
+          </p>
+        </div>
+      </section>
+
+      <!-- Fingerprint -->
+      <section>
+        <p class="eyebrow text-accent-secondary mb-3">Compare this by eye</p>
+        <h2 class="section-title mb-6">Fingerprint</h2>
+
+        <div class="fingerprint-box">
+          <code class="fingerprint">{fingerprint}</code>
+        </div>
+
+        <dl class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-px bg-border-color/40 rounded-xl overflow-hidden border border-border-color/40">
+          {facts.map((fact) => (
+            <div class="bg-bg-secondary px-4 py-4">
+              <dt class="eyebrow text-text-muted/70 mb-1.5">{fact.label}</dt>
+              <dd class="font-mono text-sm text-text-primary break-words">{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <!-- Key block -->
+      <section>
+        <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
+          <div>
+            <p class="eyebrow text-accent-primary mb-3">ASCII-armored</p>
+            <h2 class="section-title">Public key block</h2>
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            <button type="button" id="copy-key" class="btn-secondary" data-label="Copy key">
+              Copy key
+            </button>
+            <a href="/pubkey.asc" download="pubkey.asc" class="btn-secondary">
+              Download .asc
+            </a>
+          </div>
+        </div>
+
+        <div class="key-block"><pre id="key-text">{armoredKey}</pre></div>
+
+        <p class="mt-4 text-sm text-text-muted max-w-[62ch]">
+          The raw file lives at <a href="/pubkey.asc" class="text-accent-primary hover:underline font-mono">/pubkey.asc</a>,
+          served exactly as <code class="inline-code">gpg</code> wrote it. Import it straight from there:
+        </p>
+
+        <div class="key-block mt-3"><pre>curl -sSL https://randoblog.me/pubkey.asc | gpg --import</pre></div>
+      </section>
+
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const button = document.getElementById('copy-key');
+  const keyText = document.getElementById('key-text');
+
+  if (button && keyText) {
+    button.addEventListener('click', async () => {
+      // Trailing newline restored: gpg is tolerant, but a well-formed armored
+      // block ends with one, and some parsers are stricter than gpg.
+      const payload = `${keyText.textContent}\n`;
+      const original = button.dataset.label ?? 'Copy key';
+
+      try {
+        await navigator.clipboard.writeText(payload);
+        button.textContent = 'Copied';
+      } catch {
+        // Clipboard API is unavailable outside secure contexts and in some
+        // browsers without a permission grant. Select the block instead so
+        // the reader can copy it manually.
+        const range = document.createRange();
+        range.selectNodeContents(keyText);
+        const selection = window.getSelection();
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+        button.textContent = 'Press Ctrl/Cmd+C';
+      }
+
+      setTimeout(() => {
+        button.textContent = original;
+      }, 2000);
+    });
+  }
+</script>
+
+<style>
+  /* global.css sets unlayered h1/h2 rules, so these scoped selectors need the
+     extra specificity to win. Same pattern as about.astro. */
+  h1.hero-title {
+    font-size: 2.5rem;
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 0;
+  }
+
+  @media (min-width: 768px) {
+    h1.hero-title {
+      font-size: 3.25rem;
+    }
+  }
+
+  h2.section-title {
+    font-size: 1.75rem;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+    margin-bottom: 0;
+  }
+
+  .eyebrow {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .fingerprint-box {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-left: 3px solid var(--accent-primary);
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+  }
+
+  .fingerprint {
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.6;
+    letter-spacing: 0.06em;
+    color: var(--text-primary);
+    white-space: nowrap;
+    display: block;
+  }
+
+  @media (min-width: 640px) {
+    .fingerprint {
+      font-size: 1.125rem;
+    }
+  }
+
+  /* The armored block must never wrap. One altered character invalidates it,
+     and a soft wrap invites a bad copy-paste. Scroll the container instead. */
+  .key-block {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    overflow-x: auto;
+  }
+
+  .key-block pre {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    white-space: pre;
+    margin: 0;
+    padding: 1.25rem 1.5rem;
+    background: transparent;
+    border: 0;
+    tab-size: 4;
+  }
+
+  .inline-code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+    padding: 0.1rem 0.35rem;
+  }
+</style>
