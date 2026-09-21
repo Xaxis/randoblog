@@ -64,7 +64,7 @@ function formatDate(date: Date | string | undefined) {
             <button
               id="search-trigger"
               class="flex h-[30px] items-center space-x-2 px-3 text-xs text-text-muted/60 bg-bg-secondary/50 hover:bg-bg-tertiary/50 border border-border-color/30 hover:border-border-color/50 rounded-md transition-all duration-200 group"
-              aria-label="Search articles"
+              aria-label="Search articles and projects"
             >
               <svg class="w-3.5 h-3.5 group-hover:text-accent-primary transition-colors" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
@@ -82,7 +82,7 @@ function formatDate(date: Date | string | undefined) {
                 <input
                   id="search-input"
                   type="text"
-                  placeholder="Search articles..."
+                  placeholder="Search articles and projects..."
                   class="h-full flex-1 bg-transparent text-text-primary placeholder-text-muted/60 text-xs leading-none align-middle"
                   autocomplete="off"
                   style="border: none; outline: none; margin: 0; padding: 0; box-shadow: none; font-family: inherit; font-size: inherit;"
@@ -292,55 +292,74 @@ document.addEventListener('DOMContentLoaded', function() {
   const searchClose = document.getElementById('search-close');
   const metaRow = document.getElementById('meta-row');
 
-  console.log('Search elements:', { searchTrigger, searchExpanded, searchInput, searchResults, searchClose });
+  // The index is generated at build time and fetched the first time search is
+  // used, so the homepage does not ship the whole corpus inline. It covers
+  // articles and projects together.
+  let indexPromise = null;
 
-  // Simple search data - hardcoded for now to test
-  const searchData = [
-    {
-      id: 'xaxis-bitcoin-saves-humans-from-ai-redundancy',
-      title: 'When AI Makes Half of Us Redundant: What Breaks, What Survives, and Why Bitcoin Matters',
-      description: 'A clear-eyed map of a world where AI drives 30–50% unemployment: the deflationary mechanics that strain capitalism, the policy toolkit we\'re likely to see (UBI, financial repression, CBDCs/stablecoins), and the narrow but real ways Bitcoin can protect individuals\' savings and settlement rights.',
-      tags: ['AI', 'automation', 'deflation', 'unemployment', 'capitalism', 'UBI', 'financial repression', 'CBDCs', 'stablecoins', 'Bitcoin', 'macro', 'future of work']
-    },
-    {
-      id: 'xaxis-uapwatch-cubesat',
-      title: 'UAP Watch CubeSat',
-      description: 'A CubeSat mission designed to monitor and analyze Unidentified Aerial Phenomena (UAP) using advanced sensor arrays and machine learning algorithms.',
-      tags: ['UAP', 'CubeSat', 'space', 'sensors', 'machine learning']
-    },
-    {
-      id: 'xaxis-beyond-radio',
-      title: 'Beyond Radio',
-      description: 'Exploring communication methods beyond traditional radio frequencies for interstellar communication.',
-      tags: ['communication', 'radio', 'interstellar', 'physics']
-    },
-    {
-      id: 'xaxis-quantum-brains-disembodied-ai',
-      title: 'Quantum Brains & Disembodied AI',
-      description: 'Exploring the intersection of quantum consciousness and artificial intelligence systems.',
-      tags: ['quantum', 'consciousness', 'AI', 'neuroscience', 'physics']
-    },
-    {
-      id: 'xaxis-wormhole-device',
-      title: 'Wormhole Device',
-      description: 'Theoretical framework for constructing traversable wormholes using exotic matter.',
-      tags: ['wormhole', 'spacetime', 'physics', 'exotic matter', 'general relativity']
+  function loadIndex() {
+    if (!indexPromise) {
+      indexPromise = fetch('/search-index.json')
+        .then((res) => {
+          if (!res.ok) throw new Error('search index responded ' + res.status);
+          return res.json();
+        })
+        .catch((err) => {
+          // Degrade to an empty index rather than wedging the input.
+          console.error('Search index failed to load', err);
+          return { articles: [], projects: [] };
+        });
     }
-  ];
+    return indexPromise;
+  }
 
-  // Search function
-  function performSearch(query) {
-    if (!query.trim()) {
+  function escapeHtml(value) {
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  // Title and name matches outrank tags, which outrank body text, so typing a
+  // project or article name puts it at the top instead of burying it.
+  function score(entry, query) {
+    const primary = (entry.kind === 'article' ? entry.title : entry.name).toLowerCase();
+    const body = (entry.kind === 'article' ? entry.description : entry.blurb).toLowerCase();
+    const tags = (entry.tags || []).join(' ').toLowerCase();
+    const category = entry.kind === 'project' ? (entry.category || '').toLowerCase() : '';
+
+    if (primary.includes(query)) return 3;
+    if (tags.includes(query) || category.includes(query)) return 2;
+    if (body.includes(query)) return 1;
+    return 0;
+  }
+
+  function performSearch(rawQuery) {
+    const query = rawQuery.trim().toLowerCase();
+
+    if (!query) {
       showEmptyState();
       return;
     }
 
-    const results = searchData.filter(post => {
-      const searchText = (post.title + ' ' + post.description + ' ' + post.tags.join(' ')).toLowerCase();
-      return searchText.includes(query.toLowerCase());
-    }).slice(0, 6);
+    loadIndex().then((index) => {
+      // The fetch may resolve after the user has typed on; only render if this
+      // is still the query in the box.
+      if (searchInput.value.trim().toLowerCase() !== query) return;
 
-    displayResults(results, query);
+      // Projects are listed first so that, at equal relevance, the handful of
+      // projects surface ahead of seventy-odd articles. Array.sort is stable.
+      const entries = (index.projects || []).concat(index.articles || []);
+      const hits = entries
+        .map((entry) => ({ entry: entry, rank: score(entry, query) }))
+        .filter((hit) => hit.rank > 0)
+        .sort((a, b) => b.rank - a.rank)
+        .slice(0, 8)
+        .map((hit) => hit.entry);
+
+      displayResults(hits, rawQuery);
+    });
   }
 
   function showEmptyState() {
@@ -348,9 +367,69 @@ document.addEventListener('DOMContentLoaded', function() {
     searchResults.innerHTML = '';
   }
 
+  function formatDate(value) {
+    if (!value) return '';
+    const date = new Date(value);
+    if (isNaN(date.getTime())) return '';
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  }
+
+  function tagMarkup(tags) {
+    return (tags || []).map((tag) => '<span class="tag-secondary">' + escapeHtml(tag) + '</span>').join('');
+  }
+
+  function articleCard(entry) {
+    const href = '/blog/' + escapeHtml(entry.id);
+    return `
+      <article class="card hover:border-accent-primary/30 transition-all duration-300 group">
+        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4 gap-2">
+          <h3 class="text-xl font-semibold text-text-primary group-hover:text-accent-primary transition-colors duration-300 lg:flex-1 lg:pr-4">
+            <a href="${href}">${escapeHtml(entry.title)}</a>
+          </h3>
+          <div class="text-text-muted text-sm lg:flex-shrink-0 lg:text-right lg:min-w-[100px]">
+            ${escapeHtml(formatDate(entry.pubDate))}
+          </div>
+        </div>
+
+        <p class="text-text-secondary mb-4 leading-relaxed">${escapeHtml(entry.description)}</p>
+
+        <div class="flex flex-wrap gap-2 mb-4">${tagMarkup(entry.tags)}</div>
+
+        <a href="${href}" class="text-accent-primary hover:text-accent-secondary transition-colors duration-200 font-medium">
+          Read more &rarr;
+        </a>
+      </article>
+    `;
+  }
+
+  function projectCard(entry) {
+    const href = escapeHtml(entry.url);
+    return `
+      <article class="card hover:border-accent-primary/30 transition-all duration-300 group">
+        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4 gap-2">
+          <h3 class="text-xl font-mono font-semibold text-text-primary group-hover:text-accent-primary transition-colors duration-300 lg:flex-1 lg:pr-4">
+            <a href="${href}" target="_blank" rel="noopener noreferrer">${escapeHtml(entry.name)}</a>
+          </h3>
+          <div class="text-text-muted text-sm lg:flex-shrink-0 lg:text-right lg:min-w-[100px]">Project</div>
+        </div>
+
+        <p class="text-text-secondary mb-4 leading-relaxed">${escapeHtml(entry.blurb)}</p>
+
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span class="tag-primary">${escapeHtml(entry.category)}</span>
+          ${tagMarkup(entry.tags)}
+        </div>
+
+        <a href="${href}" target="_blank" rel="noopener noreferrer" class="text-accent-primary hover:text-accent-secondary transition-colors duration-200 font-medium">
+          Visit &#x2197;
+        </a>
+      </article>
+    `;
+  }
+
   function displayResults(results, query) {
     if (results.length === 0) {
-      searchResultsCount.textContent = `No articles found for "${query}"`;
+      searchResultsCount.textContent = `No results for "${query}"`;
       searchResults.innerHTML = `
         <div class="text-center py-12 text-text-muted/60">
           <svg class="w-12 h-12 mx-auto mb-4 opacity-40" fill="currentColor" viewBox="0 0 20 20">
@@ -363,56 +442,18 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    // Update results count
-    searchResultsCount.textContent = `Found ${results.length} article${results.length === 1 ? '' : 's'} for "${query}"`;
+    searchResultsCount.textContent =
+      `Found ${results.length} result${results.length === 1 ? '' : 's'} for "${query}"`;
 
-    // Create results using exact same format as normal article listings
-    const resultsHTML = results.map(post => `
-      <article class="card hover:border-accent-primary/30 transition-all duration-300 group">
-        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4 gap-2">
-          <h3 class="text-xl font-semibold text-text-primary group-hover:text-accent-primary transition-colors duration-300 lg:flex-1 lg:pr-4">
-            <a href="/blog/${post.id}">
-              ${post.title}
-            </a>
-          </h3>
-          <div class="text-text-muted text-sm lg:flex-shrink-0 lg:text-right lg:min-w-[100px]">
-            Published
-          </div>
-        </div>
-
-        <p class="text-text-secondary mb-4 leading-relaxed">
-          ${post.description}
-        </p>
-
-        <div class="flex flex-wrap gap-2 mb-4">
-          ${post.tags.map(tag => `
-            <span class="tag-secondary">${tag}</span>
-          `).join('')}
-        </div>
-
-        <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-4 text-sm text-text-muted">
-            <span class="flex items-center space-x-1">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
-              </svg>
-              <span>Article</span>
-            </span>
-          </div>
-          <a href="/blog/${post.id}" class="text-accent-primary hover:text-accent-secondary transition-colors text-sm font-medium">
-            Read article →
-          </a>
-        </div>
-      </article>
-    `).join('');
-
-    searchResults.innerHTML = resultsHTML;
+    searchResults.innerHTML = results
+      .map((entry) => (entry.kind === 'project' ? projectCard(entry) : articleCard(entry)))
+      .join('');
     searchResultsContainer.classList.remove('hidden');
   }
 
   // Open search (expand inline)
   function openSearch() {
-    console.log('Opening inline search');
+    loadIndex();
     searchTrigger.classList.add('hidden');
     searchExpanded.classList.remove('hidden');
     setTimeout(() => searchInput.focus(), 100);
@@ -430,7 +471,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Close search (collapse inline)
   function closeSearch() {
-    console.log('Closing inline search');
     searchExpanded.classList.add('hidden');
     searchTrigger.classList.remove('hidden');
     // Keep meta row from shifting by forcing fixed height
@@ -444,7 +484,6 @@ document.addEventListener('DOMContentLoaded', function() {
   if (searchTrigger) {
     searchTrigger.addEventListener('click', function(e) {
       e.preventDefault();
-      console.log('Search button clicked');
       openSearch();
     });
   }
